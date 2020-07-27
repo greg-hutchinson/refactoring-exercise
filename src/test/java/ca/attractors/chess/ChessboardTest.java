@@ -17,7 +17,7 @@ public class ChessboardTest {
         @BeforeEach
         void initialize() {
             chessboard = new Chessboard();
-            rook  = new Rook(chessboard, White);
+            rook  = new Rook(White);
             chessboard.putPieceAt(rook, D4);
         }
 

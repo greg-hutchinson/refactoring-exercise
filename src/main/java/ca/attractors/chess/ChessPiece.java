@@ -1,23 +1,10 @@
 package ca.attractors.chess;
 
-public class ChessPiece {
-    private Chessboard chessboard;
-    private PieceColor color;
+public abstract class ChessPiece {
+    private final PieceColor color;
 
-    public ChessPiece(Chessboard chessboard, PieceColor color) {
-        this.chessboard = chessboard;
+    public ChessPiece(PieceColor color) {
         this.color = color;
-    }
-
-    public static Rook newRookOnChessboard (Chessboard chessboard) {
-        return new Rook(chessboard, PieceColor.White );
-    }
-    public Chessboard getChessboard() {
-        return chessboard;
-    }
-
-    public Position getPosition() {
-        return chessboard.getPositionOf(this);
     }
 
     public PieceColor getColor() {
@@ -29,7 +16,7 @@ public class ChessPiece {
     }
     @Override
     public String toString() {
-        return getName() + "{" + getColor() + " at: " + getPosition() +"}";
+        return getName() + "{" + getColor() + "}";
     }
 
 }
