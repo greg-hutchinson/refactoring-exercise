@@ -31,11 +31,32 @@ public class Chessboard {
         return null;
     }
 
+    // With this refactor if you now have moveTo for a Bishop, Pawn, etc.
+    // You will have to overload this signature for every type of piece.
+    // It is usually considered better design to have the Individual Pieces know
+    // the specifics of what makes a valid move etc.
+    // A good test is to add one more Piece (I.e. Bishop) and see what the class then
+    // looks like.
+    // However, I do like the refactor that you have within this method. (I.e.
+    // You have realized that moveTo is actually 2 key pieces. validate and then do the
+    // actual move.
+    // However, if you want to keep the piece from not knowing about the chessboard, the
+    // signature of this method might change and this would help keep the behaviour in the
+    // individual pieces.
+
+    /**
+    public boolean moveTo(ChessPiece piece, Position targetPosition) {
+        Position current = getPositionOf(piece);
+        if (piece.canMoveFrom(current, targetPosition))
+            movePieceTo(piece, targetPosition);
+    }
+    **/
+
     public boolean moveTo(Rook rook, Position targetPosition) {
         if (!validMove(rook, targetPosition)) {
             return false;
         }
-        // If we get here - is is a valid move. Physically move the piece and answer true.
+        // If we get here - it is a valid move. Physically move the piece and answer true.
         this.movePieceTo(rook, targetPosition);
         return true;
     }
@@ -55,6 +76,11 @@ public class Chessboard {
         }
         return false;
     }
+
+
+    //Good names - it is clear that this is validating the vertical direction
+    //This method and the one below still look very similar. That is usually a code smell.
+    //There is potential for another refactor here probably.
 
     private boolean validateVertical(Position targetPosition, Position rookPosition) {
         // Ensure all cells between the source and the target are empty
