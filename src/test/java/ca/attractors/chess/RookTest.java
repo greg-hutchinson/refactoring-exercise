@@ -4,9 +4,9 @@ package ca.attractors.chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static ca.attractors.chess.PieceColor.Black;
+import static ca.attractors.chess.PieceColor.White;
 import static ca.attractors.chess.Position.*;
-import static ca.attractors.chess.PieceColor.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RookTest {
@@ -65,5 +65,4 @@ public class RookTest {
         chessboard.putPieceAt(rook2, C4);
         assertFalse(chessboard.moveTo(rook, A4));
     }
-
 }

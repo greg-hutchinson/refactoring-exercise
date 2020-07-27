@@ -14,6 +14,11 @@ public abstract class ChessPiece {
     public String getName() {
         return this.getClass().getSimpleName();
     }
+
+    public boolean sameColorAs(ChessPiece otherPiece) {
+        return this.color == otherPiece.color;
+    }
+
     @Override
     public String toString() {
         return getName() + "{" + getColor() + "}";
