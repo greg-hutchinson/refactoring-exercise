@@ -34,4 +34,12 @@ public enum Position {
         }
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
     }
+
+    public boolean isHorizontalTo(Position targetPosition) {
+        return this.x == targetPosition.x;
+    }
+
+    public boolean isVerticalToTo(Position targetPosition) {
+        return this.y == targetPosition.y;
+    }
 }

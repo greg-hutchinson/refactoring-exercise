@@ -26,7 +26,7 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isInvalidMoveTo(Position targetPosition) {
-        if (isNotHorizontalOrVerticalMove(targetPosition)) return true;
+        if (!isHorizontalOrVerticalMove(targetPosition)) return true;
         if (isInvalidOccupiedPosition(targetPosition)) return true;
         if (isPathBlocked(targetPosition)) return true;
         //If we get here - is is a valid move. Physically move the piece and answer true.
@@ -89,12 +89,12 @@ public class Rook extends ChessPiece {
         return false;
     }
 
-    private boolean isNotHorizontalOrVerticalMove(Position targetPosition) {
-        //if it is not the same x or y coordinate it is not a rooks valid move at all
-        if (targetPosition.x != getPosition().x && targetPosition.y != getPosition().y) {
+    //push this behaviour to the Position class - because Positions should know that and it
+    // makes it more re-usable for other Pieces.
+    private boolean isHorizontalOrVerticalMove(Position targetPosition) {
+        if (getPosition().isHorizontalTo(targetPosition))
             return true;
-        }
-        return false;
+        return getPosition().isVerticalToTo(targetPosition);
     }
 
 }
