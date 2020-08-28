@@ -14,16 +14,26 @@ public class Rook extends ChessPiece {
      * @return true if we were able to complete the move. false otherwise
      */
     public boolean moveTo(Position targetPosition) {
-        //if it is not the same x or y coordinate it is not a rooks valid move at all
-        if (targetPosition.x != getPosition().x && targetPosition.y != getPosition().y) {
-            return false;
+        if (isValidMoveTo(targetPosition)) {
+            getChessboard().movePieceTo(this, targetPosition);
+            return true;
         }
-        //Next - Check to make sure that if the target square is occupied it is not the same color
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        if (targetPiece != null) {
-            if (targetPiece.getColor() == getColor())
-                return false;
-        }
+        return false;
+    }
+
+    public boolean isValidMoveTo(Position targetPosition) {
+        return !isInvalidMoveTo(targetPosition);
+    }
+
+    private boolean isInvalidMoveTo(Position targetPosition) {
+        if (isNotHorizontalOrVerticalMove(targetPosition)) return true;
+        if (isInvalidOccupiedPosition(targetPosition)) return true;
+        if (isPathBlocked(targetPosition)) return true;
+        //If we get here - is is a valid move. Physically move the piece and answer true.
+        return false;
+    }
+
+    private boolean isPathBlocked(Position targetPosition) {
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
         // the increment might be positive or negative.
@@ -41,7 +51,7 @@ public class Rook extends ChessPiece {
             }
             for (Position position: positions) {
                 if (getChessboard().getPieceAt(position) != null) {
-                    return false;
+                    return true;
                 }
             }
         }
@@ -62,13 +72,29 @@ public class Rook extends ChessPiece {
             }
             for (Position position: positions) {
                 if (getChessboard().getPieceAt(position) != null) {
-                    return false;
+                    return true;
                 }
             }
         }
-        //If we get here - is is a valid move. Physically move the piece and answer true.
-        getChessboard().movePieceTo(this, targetPosition);
-        return true;
+        return false;
+    }
+
+    private boolean isInvalidOccupiedPosition(Position targetPosition) {
+        //Next - Check to make sure that if the target square is occupied it is not the same color
+        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
+        if (targetPiece != null) {
+            if (targetPiece.getColor() == getColor())
+                return true;
+        }
+        return false;
+    }
+
+    private boolean isNotHorizontalOrVerticalMove(Position targetPosition) {
+        //if it is not the same x or y coordinate it is not a rooks valid move at all
+        if (targetPosition.x != getPosition().x && targetPosition.y != getPosition().y) {
+            return true;
+        }
+        return false;
     }
 
 }
