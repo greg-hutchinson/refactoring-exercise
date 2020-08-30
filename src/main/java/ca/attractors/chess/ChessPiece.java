@@ -1,6 +1,6 @@
 package ca.attractors.chess;
 
-public class ChessPiece {
+public abstract  class ChessPiece {
     private Chessboard chessboard;
     private PieceColor color;
 
@@ -9,9 +9,6 @@ public class ChessPiece {
         this.color = color;
     }
 
-    public static Rook newRookOnChessboard (Chessboard chessboard) {
-        return new Rook(chessboard, PieceColor.White );
-    }
     public Chessboard getChessboard() {
         return chessboard;
     }
@@ -24,6 +21,22 @@ public class ChessPiece {
         return color;
     }
 
+    public boolean moveTo(Position targetPosition) {
+        Move move = new Move(this, targetPosition);
+        if (!canMove(move))
+            return false;
+        getChessboard().movePieceTo(this, targetPosition);
+        return true;
+    }
+
+    private boolean canMove(Move move) {
+        if (move.isOccupiedBySameColor())
+            return false;
+        return isValidMove(move);
+    }
+
+    protected abstract boolean isValidMove(Move move);
+
     public String getName() {
         return this.getClass().getSimpleName();
     }
@@ -31,5 +44,4 @@ public class ChessPiece {
     public String toString() {
         return getName() + "{" + getColor() + " at: " + getPosition() +"}";
     }
-
 }

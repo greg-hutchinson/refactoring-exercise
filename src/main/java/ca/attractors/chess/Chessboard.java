@@ -1,5 +1,8 @@
 package ca.attractors.chess;
 
+
+import static ca.attractors.chess.PieceColor.White;
+
 public class Chessboard {
     private ChessPiece[][] pieces = new ChessPiece[8][8];
 
@@ -15,15 +18,17 @@ public class Chessboard {
     }
 
     void movePieceTo(ChessPiece chessPiece, Position position) {
-        Position old = getPositionOf(chessPiece);
+        putPieceAt(null, chessPiece.getPosition());
         putPieceAt(chessPiece, position);
-        putPieceAt(null, old);
     }
 
-    public Position getPositionOf(ChessPiece piece) {
-        for (Position position: Position.values())
-            if (getPieceAt(position) == piece)
+    Position getPositionOf(ChessPiece pawn) {
+        for (Position position: Position.values()) {
+            ChessPiece piece = getPieceAt(position);
+            if (piece == pawn) {    //Refactor - inline variable - remove braces?
                 return position;
-        return null;
+            }
+        }
+        throw new UnsupportedOperationException("This piece is not found on this chessboard");
     }
 }

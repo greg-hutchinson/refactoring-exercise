@@ -21,10 +21,6 @@ public class RookTest {
     }
 
     @Test
-    void illustrateRefactorSignature() {
-        Rook rook1 = ChessPiece.newRookOnChessboard(chessboard);
-    }
-    @Test
     void moveToNonHorizontalOrVerticalSpot() {
         assertFalse(rook.moveTo(B2));
     }
@@ -61,7 +57,6 @@ public class RookTest {
         assertTrue(rook.moveTo(A4));
         assertSame(rook.getPosition(), A4);
     }
-
 
     @Test
     void moveHorizontallyToCellWithOccupiedCellsInBetween() {

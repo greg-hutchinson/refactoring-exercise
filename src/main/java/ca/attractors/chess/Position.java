@@ -1,5 +1,8 @@
 package ca.attractors.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Position {
     A1('a',1), A2('a', 2), A3('a', 3), A4('a', 4), A5('a', 5), A6('a', 6), A7('a', 7), A8('a', 8),
     B1('b',1), B2('b', 2), B3('b', 3), B4('b', 4), B5('b', 5), B6('b', 6), B7('b', 7), B8('b', 8),
@@ -35,11 +38,31 @@ public enum Position {
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
     }
 
-    public boolean isHorizontalTo(Position targetPosition) {
-        return this.x == targetPosition.x;
+    public boolean isLineTo(Position target) {
+        return isDiagonalTo(target) || isHorizontalTo(target) || isVerticalTo(target);
     }
 
-    public boolean isVerticalToTo(Position targetPosition) {
-        return this.y == targetPosition.y;
+    public boolean isHorizontalTo(Position target) {
+        return y == target.y;
+    }
+    public boolean isVerticalTo(Position target) {
+        return x == target.x;
+    }
+    public boolean isDiagonalTo(Position target)
+    {
+        int diffx = Math.abs(getXOffset() - target.getXOffset());
+        int diffy = Math.abs(getYOffset() - target.getYOffset());
+        return diffx == diffy;
+    }
+
+
+    public List<Position> getPathTo(Position target) {
+        List<Position> path = new ArrayList<>();
+        int incrementX = Integer.signum(target.getXOffset() - getXOffset());
+        int incrementY = Integer.signum(target.getYOffset() - getYOffset());
+        int y = getYOffset() + incrementY;
+        for (int x = getXOffset() + incrementX; x != target.getXOffset() || y != target.getYOffset(); x = x + incrementX, y = y + incrementY)
+            path.add(Position.getPositionFor(x, y));
+        return path;
     }
 }
