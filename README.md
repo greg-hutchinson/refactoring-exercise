@@ -7,7 +7,7 @@ commented pieces and to give them meaningful names. (i.e isInvalidTarget, isInva
 mechanical refactorings and are absolutely good to do. Everything only had one level of indentation in the end, meaningful names, etc.
 You "improved the design of existing code" so these were good refactorings.
 
-Where some of you still some room for more refactoring were in two areas:
+Where some of you still had some room for more refactoring were in two areas:
 - There was still some duplicate code in the code that checked whether the paths were clear between horizontal moves
 and vertical moves. (See Position class >>  getPathTo(Position target) for one solution to this.
 - The "***looks like the language was designed for the problem***" was not completely met.
@@ -31,7 +31,7 @@ I had done the initial refactorings that most of you had done as well.
 
 I think the key to this were a couple of things:
 - I added a class Move - which encapsulated the concept of a Chess move being a source and target position on a chessboard. 
-I was able to push a lot of the details about horizontal and vertical movement and paths between objects here. This has the
+I was able to push a lot of the details about horizontal and vertical (and eventually diagonal) movement and paths between objects here. This has the
 extra benefit that all this code can be tested independently of any of the ChessPiece classes.
 - Pushed several methods to the Position class (Enum). If you find that you are taking an object apart by querying its
 data and making decisions, consider moving the behaviour to this class. In this example it is quite trivial but this 
