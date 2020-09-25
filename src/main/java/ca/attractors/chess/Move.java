@@ -1,8 +1,5 @@
 package ca.attractors.chess;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Move {
     private ChessPiece piece;
     private Position source;
@@ -25,6 +22,14 @@ public class Move {
         return source.isVerticalTo(target);
     }
     public boolean isDiagonal() {return source.isDiagonalTo(target); }
+
+
+
+    public boolean isKnightsMove () {
+        if (isLine())
+            return false;
+        return source.getOrthogonalStepsTo(target) == 3;
+    }
 
     public boolean isPathUnoccupied() {
         return !isPathBlocked();

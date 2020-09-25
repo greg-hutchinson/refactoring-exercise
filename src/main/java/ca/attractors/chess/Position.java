@@ -3,6 +3,8 @@ package ca.attractors.chess;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.*;
+
 public enum Position {
     A1('a',1), A2('a', 2), A3('a', 3), A4('a', 4), A5('a', 5), A6('a', 6), A7('a', 7), A8('a', 8),
     B1('b',1), B2('b', 2), B3('b', 3), B4('b', 4), B5('b', 5), B6('b', 6), B7('b', 7), B8('b', 8),
@@ -48,13 +50,26 @@ public enum Position {
     public boolean isVerticalTo(Position target) {
         return x == target.x;
     }
+
     public boolean isDiagonalTo(Position target)
     {
-        int diffx = Math.abs(getXOffset() - target.getXOffset());
-        int diffy = Math.abs(getYOffset() - target.getYOffset());
+        int diffx = getOrthogonalXSteps(target);
+        int diffy = getOrthorgonalYSteps(target);
         return diffx == diffy;
     }
+    public int getOrthogonalStepsTo(Position target) {
+        int xSteps = getOrthogonalXSteps(target);
+        int ySteps = getOrthorgonalYSteps(target);
+        return xSteps + ySteps;
+    }
 
+    private int getOrthorgonalYSteps(Position target) {
+        return abs(getYOffset() - target.getYOffset());
+    }
+
+    private int getOrthogonalXSteps(Position target) {
+        return abs(getXOffset() - target.getXOffset());
+    }
 
     public List<Position> getPathTo(Position target) {
         List<Position> path = new ArrayList<>();
@@ -65,4 +80,6 @@ public enum Position {
             path.add(Position.getPositionFor(x, y));
         return path;
     }
+
+
 }

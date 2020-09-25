@@ -23,13 +23,17 @@ public abstract  class ChessPiece {
 
     public boolean moveTo(Position targetPosition) {
         Move move = new Move(this, targetPosition);
-        if (!canMove(move))
+        if (!canMoveTo(move))
             return false;
         getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
 
-    private boolean canMove(Move move) {
+    public boolean canMoveTo(Position targetPosition) {
+        return canMoveTo(new Move(this, targetPosition));
+    }
+
+    private boolean canMoveTo(Move move) {
         if (move.isOccupiedBySameColor())
             return false;
         return isValidMove(move);
