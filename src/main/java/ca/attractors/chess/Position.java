@@ -53,21 +53,21 @@ public enum Position {
 
     public boolean isDiagonalTo(Position target)
     {
-        int diffx = getOrthogonalXSteps(target);
-        int diffy = getOrthorgonalYSteps(target);
+        int diffx = getXSteps(target);
+        int diffy = getYSteps(target);
         return diffx == diffy;
     }
-    public int getOrthogonalStepsTo(Position target) {
-        int xSteps = getOrthogonalXSteps(target);
-        int ySteps = getOrthorgonalYSteps(target);
+    public int getStepsTo(Position target) {
+        int xSteps = getXSteps(target);
+        int ySteps = getYSteps(target);
         return xSteps + ySteps;
     }
 
-    private int getOrthorgonalYSteps(Position target) {
+    private int getYSteps(Position target) {
         return abs(getYOffset() - target.getYOffset());
     }
 
-    private int getOrthogonalXSteps(Position target) {
+    private int getXSteps(Position target) {
         return abs(getXOffset() - target.getXOffset());
     }
 

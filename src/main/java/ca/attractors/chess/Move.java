@@ -28,7 +28,7 @@ public class Move {
     public boolean isKnightsMove () {
         if (isLine())
             return false;
-        return source.getOrthogonalStepsTo(target) == 3;
+        return source.getStepsTo(target) == 3;
     }
 
     public boolean isPathUnoccupied() {
