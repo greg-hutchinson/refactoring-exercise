@@ -70,5 +70,6 @@ public class Rook extends ChessPiece {
         getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
+    
 
 }
