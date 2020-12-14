@@ -24,6 +24,11 @@ public class Rook extends ChessPiece {
         if (isDiagonalMove(targetPosition)) return true;
         if (isTargetSameColour(targetPosition)) return true;
         if (isHorizontalPathNotClear(targetPosition)) return true;
+        if (isVerticalPathNotClear(targetPosition)) return true;
+        return false;
+    }
+
+    private boolean isVerticalPathNotClear(Position targetPosition) {
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
         // the increment might be positive or negative.
