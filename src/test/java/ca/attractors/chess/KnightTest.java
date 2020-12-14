@@ -45,5 +45,11 @@ public class KnightTest {
     void moveLShapedWithUnoccupiedCell() {
         assertTrue(knight.moveTo(E6));
         assertSame(knight.getPosition(), E6);
+        assertTrue(knight.moveTo(C5));
+        assertSame(knight.getPosition(), C5);
+        assertTrue(knight.moveTo(B7));
+        assertSame(knight.getPosition(), B7);
+        assertTrue(knight.moveTo(D8));
+        assertSame(knight.getPosition(), D8);
     }
 }
