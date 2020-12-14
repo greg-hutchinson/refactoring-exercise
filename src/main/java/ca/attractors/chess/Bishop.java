@@ -15,12 +15,14 @@ public class Bishop extends ChessPiece {
         return true;
     }
 
-    public boolean isValidMove(Position targetPosition) {
+    private boolean isValidMove(Position targetPosition) {
         return !isTargetSameColour(targetPosition)
                 && isDiagonalMove(targetPosition);//TODO
     }
 
-    public boolean isDiagonalMove(Position targetPosition) {
+    private boolean isDiagonalMove(Position targetPosition) {
         return targetPosition.x - getPosition().x == targetPosition.y - getPosition().y;
     }
+
+
 }
