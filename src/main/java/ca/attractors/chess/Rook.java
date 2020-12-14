@@ -95,6 +95,6 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isVerticalMove(Position targetPosition) {
-        return targetPosition.x != getPosition().x;
+        return targetPosition.y != getPosition().y;
     }
 }
