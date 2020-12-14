@@ -16,6 +16,6 @@ public class Bishop extends ChessPiece {
     }
 
     public boolean isValidMove(Position position) {
-        return true;//TODO
+        return !isTargetSameColour(position);//TODO
     }
 }

@@ -32,4 +32,11 @@ public class ChessPiece {
         return getName() + "{" + getColor() + " at: " + getPosition() +"}";
     }
 
+    protected boolean isTargetSameColour(Position targetPosition) {
+        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
+        if (targetPiece != null) {
+            return targetPiece.getColor() == getColor();
+        }
+        return false;
+    }
 }

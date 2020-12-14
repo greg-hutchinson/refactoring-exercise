@@ -26,15 +26,6 @@ public class Rook extends ChessPiece {
                 && isPathClear(targetPosition);
     }
 
-    private boolean isTargetSameColour(Position targetPosition) {
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        if (targetPiece != null) {
-            return targetPiece.getColor() == getColor();
-        }
-        return false;
-    }
-
-
     private boolean isPathClear(Position targetPosition) {
         if (isVerticalMove(targetPosition))
             return isPositionsClear(getVerticalPositions(targetPosition));
