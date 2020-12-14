@@ -6,16 +6,21 @@ public class Bishop extends ChessPiece {
         super(chessboard, colour);
     }
 
-    public boolean moveTo(Position position){
-        if (!isValidMove(position)) {
+    public boolean moveTo(Position targetPosition){
+        if (!isValidMove(targetPosition)) {
             return false;
         }
 
-        getChessboard().movePieceTo(this, position);
+        getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
 
-    public boolean isValidMove(Position position) {
-        return !isTargetSameColour(position);//TODO
+    public boolean isValidMove(Position targetPosition) {
+        return !isTargetSameColour(targetPosition)
+                && isDiagonalMove(targetPosition);//TODO
+    }
+
+    public boolean isDiagonalMove(Position targetPosition) {
+        return targetPosition.x - getPosition().x == targetPosition.y - getPosition().y;
     }
 }
