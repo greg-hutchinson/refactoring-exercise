@@ -14,13 +14,13 @@ public class Rook extends ChessPiece {
      * @return true if we were able to complete the move. false otherwise
      */
     public boolean moveTo(Position targetPosition) {
-        if (isInvalidMove(targetPosition)) return false;
+        if (!isValidMove(targetPosition)) return false;
         //If we get here - is is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
 
-    private boolean isInvalidMove(Position targetPosition) {
+    private boolean isValidMove(Position targetPosition) {
         return isDiagonalMove(targetPosition)
                 || isTargetSameColour(targetPosition)
                 || isHorizontalPathNotClear(targetPosition)
