@@ -21,10 +21,9 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isValidMove(Position targetPosition) {
-        return !(isDiagonalMove(targetPosition)
-                || isTargetSameColour(targetPosition)
-                || isHorizontalPathNotClear(targetPosition)
-                || isVerticalPathNotClear(targetPosition));
+        return !isDiagonalMove(targetPosition)
+                && isTargetSameColour(targetPosition)
+                && isPathClear(targetPosition);
     }
 
     private boolean isTargetSameColour(Position targetPosition) {
@@ -36,28 +35,22 @@ public class Rook extends ChessPiece {
     }
 
 
-    private boolean isHorizontalPathNotClear(Position targetPosition) {
+    private boolean isPathClear(Position targetPosition) {
         if (isVerticalMove(targetPosition))
-            return false;
-        return isPositionsClear(getVerticalPositions(targetPosition));
-    }
-
-    private boolean isVerticalPathNotClear(Position targetPosition) {
-        if (isHorizontalMove(targetPosition))
-            return false;
+            return isPositionsClear(getVerticalPositions(targetPosition));
         return isPositionsClear(getHorizontalPositions(targetPosition));
     }
 
     private boolean isPositionsClear(List<Position> positions) {
         for (Position position : positions) {
             if (getChessboard().getPieceAt(position) != null) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
-    private List<Position> getVerticalPositions(Position targetPosition) {
+    private List<Position> getHorizontalPositions(Position targetPosition) {
         int start = getPosition().getXOffset();
         int end = targetPosition.getXOffset();
         int increment = getIncrement(start, end);
@@ -68,7 +61,7 @@ public class Rook extends ChessPiece {
         return positions;
     }
 
-    private List<Position> getHorizontalPositions(Position targetPosition) {
+    private List<Position> getVerticalPositions(Position targetPosition) {
         int start = getPosition().getYOffset();
         int end = targetPosition.getYOffset();
         int increment = getIncrement(start, end);
