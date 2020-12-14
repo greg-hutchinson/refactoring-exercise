@@ -54,13 +54,6 @@ public class Rook extends ChessPiece {
         return positions;
     }
 
-    private int getIncrement(int start, int end)
-    {
-        if (start > end)
-            return -1;
-        return 1;
-    }
-
     private boolean isDiagonalMove(Position targetPosition) {
         return isHorizontalMove(targetPosition) && isVerticalMove(targetPosition);
     }

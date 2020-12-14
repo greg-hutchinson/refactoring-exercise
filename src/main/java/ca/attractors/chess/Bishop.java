@@ -24,10 +24,10 @@ public class Bishop extends ChessPiece {
         if (!isDiagonalMove(targetPosition)){
             return false;
         }
-        return isPositionsClear(getPositions(targetPosition));
+        return isPositionsClear(getDiagnoalPositions(targetPosition));
     }
 
-    private List<Position> getPositions(Position targetPosition) {
+    private List<Position> getDiagnoalPositions(Position targetPosition) {
         List<Position> positions = new ArrayList<>();
         int horizontalIncrement = getIncrement(getPosition().getXOffset(), targetPosition.getXOffset());
         int verticalIncrement = getIncrement(getPosition().getYOffset(), targetPosition.getYOffset());
@@ -40,10 +40,4 @@ public class Bishop extends ChessPiece {
         return positions;
     }
 
-    private int getIncrement(int start, int end)
-    {
-        if (start > end)
-            return -1;
-        return 1;
-    }
 }

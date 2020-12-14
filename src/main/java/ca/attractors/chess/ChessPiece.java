@@ -61,4 +61,11 @@ public abstract class ChessPiece {
     }
 
     protected abstract boolean isValidMove(Position targetPosition);
+
+    protected int getIncrement(int start, int end)
+    {
+        if (start > end)
+            return -1;
+        return 1;
+    }
 }
