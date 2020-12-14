@@ -27,27 +27,6 @@ public class Rook extends ChessPiece {
                 || isVerticalPathNotClear(targetPosition));
     }
 
-    private boolean isVerticalPathNotClear(Position targetPosition) {
-        //Next - Get all the cells between the source and the target and ensure that they are empty.
-        // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
-        // the increment might be positive or negative.
-        if (targetPosition.y == getPosition().y) {
-            int start = getPosition().getXOffset();
-            int end = targetPosition.getXOffset();
-            int increment = 0;
-            if (start > end)
-                increment = -1;
-            else
-                increment = 1;
-            List<Position> positions = new ArrayList<>();
-            for (int x = start+increment; x != end; x = x + increment) {
-                positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
-            }
-            if (isPositionsClear(positions)) return true;
-        }
-        return false;
-    }
-
     private boolean isTargetSameColour(Position targetPosition) {
         //Next - Check to make sure that if the target square is occupied it is not the same color
         ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
@@ -58,13 +37,23 @@ public class Rook extends ChessPiece {
         return false;
     }
 
+
+    private boolean isVerticalPathNotClear(Position targetPosition) {
+        //Next - Get all the cells between the source and the target and ensure that they are empty.
+        // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
+        // the increment might be positive or negative.
+        if (targetPosition.y != getPosition().y)
+            return false;
+        return isPositionsClear(getVerticalPositions(targetPosition));
+    }
+
     private boolean isHorizontalPathNotClear(Position targetPosition) {
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
         // the increment might be positive or negative.
         if (targetPosition.x != getPosition().x)
             return false;
-        return isPositionsClear(getHorizontalPositions(targetPosition, getPosition().getYOffset(), targetPosition.getYOffset()));
+        return isPositionsClear(getHorizontalPositions(targetPosition));
     }
 
     private boolean isPositionsClear(List<Position> positions) {
@@ -76,7 +65,20 @@ public class Rook extends ChessPiece {
         return false;
     }
 
-    private List<Position> getHorizontalPositions(Position targetPosition, int start, int end) {
+    private List<Position> getVerticalPositions(Position targetPosition) {
+        int start = getPosition().getXOffset();
+        int end = targetPosition.getXOffset();
+        int increment = getIncrement(start, end);
+        List<Position> positions = new ArrayList<>();
+        for (int x = start+increment; x != end; x = x + increment) {
+            positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
+        }
+        return positions;
+    }
+
+    private List<Position> getHorizontalPositions(Position targetPosition) {
+        int start = getPosition().getYOffset();
+        int end = targetPosition.getYOffset();
         int increment = getIncrement(start, end);
 
         List<Position> positions = new ArrayList<>();
