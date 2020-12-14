@@ -21,11 +21,7 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isInvalidMove(Position targetPosition) {
-        if (isDiagonalMove(targetPosition)) return true;
-        if (isTargetSameColour(targetPosition)) return true;
-        if (isHorizontalPathNotClear(targetPosition)) return true;
-        if (isVerticalPathNotClear(targetPosition)) return true;
-        return false;
+        return isDiagonalMove(targetPosition) || isTargetSameColour(targetPosition) || isHorizontalPathNotClear(targetPosition) || isVerticalPathNotClear(targetPosition);
     }
 
     private boolean isVerticalPathNotClear(Position targetPosition) {
