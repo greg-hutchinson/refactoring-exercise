@@ -52,7 +52,7 @@ public class BishopTest {
     void moveDiagonallyToCellWithOccupiedCellsInBetween() {
         Bishop bishop2 = new Bishop(chessboard, Black);
         chessboard.putPieceAt(bishop2, E5);
-        assertFalse(bishop2.moveTo(F6));
+        assertFalse(bishop.moveTo(F6));
     }
 
 }

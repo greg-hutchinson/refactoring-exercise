@@ -1,5 +1,7 @@
 package ca.attractors.chess;
 
+import java.util.List;
+
 public class ChessPiece {
     private Chessboard chessboard;
     private PieceColor color;
@@ -38,5 +40,14 @@ public class ChessPiece {
             return targetPiece.getColor() == getColor();
         }
         return false;
+    }
+
+    protected boolean isPositionsClear(List<Position> positions) {
+        for (Position position : positions) {
+            if (getChessboard().getPieceAt(position) != null) {
+                return false;
+            }
+        }
+        return true;
     }
 }

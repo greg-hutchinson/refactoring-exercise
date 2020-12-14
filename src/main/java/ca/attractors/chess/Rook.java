@@ -32,15 +32,6 @@ public class Rook extends ChessPiece {
         return isPositionsClear(getHorizontalPositions(targetPosition));
     }
 
-    private boolean isPositionsClear(List<Position> positions) {
-        for (Position position : positions) {
-            if (getChessboard().getPieceAt(position) != null) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private List<Position> getHorizontalPositions(Position targetPosition) {
         int start = getPosition().getXOffset();
         int end = targetPosition.getXOffset();
