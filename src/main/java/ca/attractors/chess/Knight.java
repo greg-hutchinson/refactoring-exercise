@@ -7,7 +7,13 @@ public class Knight extends ChessPiece {
 
     @Override
     protected boolean isValidMove(Position targetPosition) {
-        return true; //TODO
+        return !isTargetSameColour(targetPosition)
+                && isLShapedMove(targetPosition);
     }
 
+    private boolean isLShapedMove(Position targetPosition) {
+        int verticalChange = Math.abs(targetPosition.getYOffset() - getPosition().getYOffset());
+        int horizontalChange = Math.abs(targetPosition.getXOffset() - getPosition().getXOffset());
+        return (verticalChange == 1 && horizontalChange == 2) ^ (verticalChange == 2 && horizontalChange == 1);
+    }
 }
