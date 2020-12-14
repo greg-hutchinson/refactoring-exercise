@@ -37,13 +37,13 @@ public class Rook extends ChessPiece {
 
 
     private boolean isHorizontalPathNotClear(Position targetPosition) {
-        if (targetPosition.y != getPosition().y)
+        if (isVerticalMove(targetPosition))
             return false;
         return isPositionsClear(getVerticalPositions(targetPosition));
     }
 
     private boolean isVerticalPathNotClear(Position targetPosition) {
-        if (targetPosition.x != getPosition().x)
+        if (isHorizontalMove(targetPosition))
             return false;
         return isPositionsClear(getHorizontalPositions(targetPosition));
     }
@@ -87,8 +87,14 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isDiagonalMove(Position targetPosition) {
-        return targetPosition.x != getPosition().x && targetPosition.y != getPosition().y;
+        return isHorizontalMove(targetPosition) && isVerticalMove(targetPosition);
     }
 
+    private boolean isHorizontalMove(Position targetPosition) {
+        return targetPosition.x != getPosition().x;
+    }
 
+    private boolean isVerticalMove(Position targetPosition) {
+        return targetPosition.x != getPosition().x;
+    }
 }
