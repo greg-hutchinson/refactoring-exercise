@@ -38,7 +38,7 @@ public class Rook extends ChessPiece {
     }
 
 
-    private boolean isVerticalPathNotClear(Position targetPosition) {
+    private boolean isHorizontalPathNotClear(Position targetPosition) {
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
         // the increment might be positive or negative.
@@ -47,7 +47,7 @@ public class Rook extends ChessPiece {
         return isPositionsClear(getVerticalPositions(targetPosition));
     }
 
-    private boolean isHorizontalPathNotClear(Position targetPosition) {
+    private boolean isVerticalPathNotClear(Position targetPosition) {
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
         // the increment might be positive or negative.
