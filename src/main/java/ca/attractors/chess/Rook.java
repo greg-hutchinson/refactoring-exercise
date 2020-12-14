@@ -22,7 +22,7 @@ public class Rook extends ChessPiece {
 
     private boolean isValidMove(Position targetPosition) {
         return !isDiagonalMove(targetPosition)
-                && isTargetSameColour(targetPosition)
+                && !isTargetSameColour(targetPosition)
                 && isPathClear(targetPosition);
     }
 
