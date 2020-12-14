@@ -31,8 +31,7 @@ public class Rook extends ChessPiece {
         //Next - Check to make sure that if the target square is occupied it is not the same color
         ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
         if (targetPiece != null) {
-            if (targetPiece.getColor() == getColor())
-                return true;
+            return targetPiece.getColor() == getColor();
         }
         return false;
     }
@@ -96,10 +95,7 @@ public class Rook extends ChessPiece {
 
     private boolean isDiagonalMove(Position targetPosition) {
         //if it is not the same x or y coordinate it is not a rooks valid move at all
-        if (targetPosition.x != getPosition().x && targetPosition.y != getPosition().y) {
-            return true;
-        }
-        return false;
+        return targetPosition.x != getPosition().x && targetPosition.y != getPosition().y;
     }
 
 
