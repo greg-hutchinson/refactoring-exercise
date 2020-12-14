@@ -2,7 +2,7 @@ package ca.attractors.chess;
 
 import java.util.List;
 
-public class ChessPiece {
+public abstract class ChessPiece {
     private Chessboard chessboard;
     private PieceColor color;
 
@@ -50,4 +50,15 @@ public class ChessPiece {
         }
         return true;
     }
+
+    public boolean moveTo(Position targetPosition){
+        if (!isValidMove(targetPosition)) {
+            return false;
+        }
+
+        getChessboard().movePieceTo(this, targetPosition);
+        return true;
+    }
+
+    protected abstract boolean isValidMove(Position targetPosition);
 }

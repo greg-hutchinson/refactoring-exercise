@@ -9,16 +9,8 @@ public class Bishop extends ChessPiece {
         super(chessboard, colour);
     }
 
-    public boolean moveTo(Position targetPosition){
-        if (!isValidMove(targetPosition)) {
-            return false;
-        }
-
-        getChessboard().movePieceTo(this, targetPosition);
-        return true;
-    }
-
-    private boolean isValidMove(Position targetPosition) {
+    @Override
+    protected boolean isValidMove(Position targetPosition) {
         return !isTargetSameColour(targetPosition)
                 && isDiagonalMove(targetPosition)
                 && isPathClear(targetPosition);

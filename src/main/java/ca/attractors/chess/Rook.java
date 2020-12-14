@@ -20,7 +20,7 @@ public class Rook extends ChessPiece {
         return true;
     }
 
-    private boolean isValidMove(Position targetPosition) {
+    protected boolean isValidMove(Position targetPosition) {
         return !isDiagonalMove(targetPosition)
                 && !isTargetSameColour(targetPosition)
                 && isPathClear(targetPosition);
