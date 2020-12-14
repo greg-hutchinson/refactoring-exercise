@@ -55,7 +55,7 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isLinearMove(Position targetPosition) {
-        return isHorizontalMove(targetPosition) || isVerticalMove(targetPosition);
+        return isHorizontalMove(targetPosition) ^ isVerticalMove(targetPosition);
     }
 
     private boolean isHorizontalMove(Position targetPosition) {
