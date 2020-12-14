@@ -21,7 +21,7 @@ public class Rook extends ChessPiece {
     }
 
     protected boolean isValidMove(Position targetPosition) {
-        return !isDiagonalMove(targetPosition)
+        return isLinearMove(targetPosition)
                 && !isTargetSameColour(targetPosition)
                 && isPathClear(targetPosition);
     }
@@ -54,8 +54,8 @@ public class Rook extends ChessPiece {
         return positions;
     }
 
-    private boolean isDiagonalMove(Position targetPosition) {
-        return isHorizontalMove(targetPosition) && isVerticalMove(targetPosition);
+    private boolean isLinearMove(Position targetPosition) {
+        return isHorizontalMove(targetPosition) || isVerticalMove(targetPosition);
     }
 
     private boolean isHorizontalMove(Position targetPosition) {
