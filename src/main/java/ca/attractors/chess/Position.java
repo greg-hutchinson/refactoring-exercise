@@ -34,4 +34,52 @@ public enum Position {
         }
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
     }
+
+    boolean atLeftBorder() {
+        return this.x == 'a';
+    }
+
+    Position left() {
+        return Position.getPositionFor(this.getXOffset() - 1, this.getYOffset());
+    }
+
+    boolean atRightBorder() {
+        return this.x == 'h';
+    }
+
+    Position right() {
+        return Position.getPositionFor(this.getXOffset() + 1, this.getYOffset());
+    }
+
+    boolean atTopBorder() {
+        return this.y == 8;
+    }
+
+    Position up() {
+        return Position.getPositionFor(this.getXOffset(), this.getYOffset() + 1);
+    }
+
+    boolean atBottomBorder() {
+        return this.y == 1;
+    }
+
+    Position down() {
+        return Position.getPositionFor(this.getXOffset(), this.getYOffset() - 1);
+    }
+
+    Position upLeft() {
+        return Position.getPositionFor(this.getXOffset() - 1, this.getYOffset() + 1);
+    }
+
+    Position upRight() {
+        return Position.getPositionFor(this.getXOffset() + 1, this.getYOffset() + 1);
+    }
+
+    Position downLeft() {
+        return Position.getPositionFor(this.getXOffset() - 1, this.getYOffset() - 1);
+    }
+
+    Position downRight() {
+        return Position.getPositionFor(this.getXOffset() + 1, this.getYOffset() - 1);
+    }
 }
