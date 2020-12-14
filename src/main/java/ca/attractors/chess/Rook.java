@@ -22,12 +22,7 @@ public class Rook extends ChessPiece {
 
     private boolean isInvalidMove(Position targetPosition) {
         if (isDiagonalMove(targetPosition)) return true;
-        //Next - Check to make sure that if the target square is occupied it is not the same color
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        if (targetPiece != null) {
-            if (targetPiece.getColor() == getColor())
-                return true;
-        }
+        if (isTargetSameColour(targetPosition)) return true;
         if (isPathClear(targetPosition)) return true;
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
@@ -49,6 +44,16 @@ public class Rook extends ChessPiece {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    private boolean isTargetSameColour(Position targetPosition) {
+        //Next - Check to make sure that if the target square is occupied it is not the same color
+        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
+        if (targetPiece != null) {
+            if (targetPiece.getColor() == getColor())
+                return true;
         }
         return false;
     }
