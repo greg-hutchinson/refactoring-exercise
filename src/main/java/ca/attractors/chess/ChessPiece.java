@@ -12,6 +12,11 @@ public class ChessPiece {
     public static Rook newRookOnChessboard (Chessboard chessboard) {
         return new Rook(chessboard, PieceColor.White );
     }
+
+    public static Bishop newBishopOnChessboard (Chessboard chessboard) {
+        return new Bishop(chessboard, PieceColor.White );
+    }
+
     public Chessboard getChessboard() {
         return chessboard;
     }
