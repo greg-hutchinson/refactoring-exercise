@@ -39,8 +39,8 @@ public abstract class ChessPiece {
      * This is a shortcut method of board#moveTo method
      * @param position
      */
-    public final void moveTo(Position position) {
-        chessboard.moveTo(this, position);
+    public final boolean moveTo(Position position) {
+        return chessboard.moveTo(this, position);
     }
 
     /**
@@ -48,14 +48,12 @@ public abstract class ChessPiece {
      * @param position
      * @return
      */
-    public boolean movePieceTo(Position position) {
-        boolean isValid = getValidMovePositions().contains(position);
-        if (isValid) {
-            this.position = position;
-            return true;
-        } else {
-            return false;
-        }
+    public boolean canMovePieceTo(Position position) {
+        return getValidMovePositions().contains(position);
+    }
+
+    public void physicalMoveTo(Position position) {
+        this.position = position;
     }
 
     protected boolean isPositionVacant(Position position) {
@@ -65,7 +63,7 @@ public abstract class ChessPiece {
 
     protected boolean isPositionOccupiedByOpponent(Position position) {
         ChessPiece piece = chessboard.getPieceAtPosition(position);
-        return piece != null || piece.getColor() == getColor().toggle();
+        return piece != null && piece.getColor() == getColor().toggle();
     }
 
     protected List<Position> peekUp() {
@@ -230,19 +228,27 @@ public abstract class ChessPiece {
      * @return
      */
     public ImmutableChessPiece asImmutable() {
-        return new ImmutableChessPiece(color, position);
+        return new ImmutableChessPiece(color, position, getName());
     }
 
 }
 
 class ImmutableChessPiece extends ChessPiece {
 
-    public ImmutableChessPiece(PieceColor color, Position position) {
+    private String name;
+
+    public ImmutableChessPiece(PieceColor color, Position position, String name) {
         super(color, position, null);
+        this.name = name;
     }
 
     @Override
-    public boolean movePieceTo(Position position) {
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void physicalMoveTo(Position position) {
         throw new UnsupportedOperationException("Invalid move");
     }
 

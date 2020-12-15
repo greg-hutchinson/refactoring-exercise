@@ -1,6 +1,8 @@
 package ca.attractors.chess;
 
 
+import ca.attractors.chess.ChessPiece;
+import ca.attractors.chess.Chessboard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,37 +13,38 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RookTest {
     private Chessboard chessboard;
-    private Rook rook;
+    private ChessPiece rook;
 
     @BeforeEach
     void initialize() {
         chessboard = new Chessboard();
-        rook  = new Rook(chessboard, White);
-        chessboard.putPieceAt(rook, D4);
+        rook = new RookPiece(White, D4, chessboard);
+        chessboard.addPieces(rook);
     }
 
     @Test
     void illustrateRefactorSignature() {
-        Rook rook1 = ChessPiece.newRookOnChessboard(chessboard);
+        RookPiece rook1 = new RookPiece(White, null, chessboard);
     }
+
     @Test
     void moveToNonHorizontalOrVerticalSpot() {
         assertFalse(rook.moveTo(B2));
     }
     @Test
     void moveToOccupiedCellOfSameColor() {
-        Rook rook2 = new Rook(chessboard, White);
-        chessboard.putPieceAt(rook2, D3);
+        RookPiece rook2 = new RookPiece(White, D3,  chessboard);
+        chessboard.addPieces(rook2);
         assertFalse(rook.moveTo(D3));
     }
 
     @Test
     void moveToOccupiedCellOfDifferentColor() {
-        Rook rook2 = new Rook(chessboard, Black);
-        chessboard.putPieceAt(rook2, D1);
+        RookPiece rook2 = new RookPiece(Black, D1, chessboard);
+        chessboard.addPieces(rook2);
         assertTrue(rook.moveTo(D1));
         assertSame(rook.getPosition(), D1);
-        assertNull (chessboard.getPieceAt(D4));
+        assertNull (chessboard.getPieceAtPosition(D4));
     }
 
     @Test
@@ -49,10 +52,11 @@ public class RookTest {
         assertTrue(rook.moveTo(D8));
         assertSame(rook.getPosition(), D8);
     }
+
     @Test
     void moveVerticallyToCellWithOccupiedCellsInBetween() {
-        Rook rook2 = new Rook(chessboard, Black);
-        chessboard.putPieceAt(rook2, D7);
+        RookPiece rook2 = new RookPiece(Black, D7, chessboard);
+        chessboard.addPieces(rook2);
         assertFalse(rook.moveTo(D8));
     }
 
@@ -62,11 +66,10 @@ public class RookTest {
         assertSame(rook.getPosition(), A4);
     }
 
-
     @Test
     void moveHorizontallyToCellWithOccupiedCellsInBetween() {
-        Rook rook2 = new Rook(chessboard, Black);
-        chessboard.putPieceAt(rook2, C4);
+        RookPiece rook2 = new RookPiece(Black, C4, chessboard);
+        chessboard.addPieces(rook2);
         assertFalse(rook.moveTo(A4));
     }
 

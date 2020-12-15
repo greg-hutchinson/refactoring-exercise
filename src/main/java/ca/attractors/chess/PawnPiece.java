@@ -12,10 +12,9 @@ class PawnPiece extends ChessPiece {
     }
 
     @Override
-    public boolean movePieceTo(Position position) {
-        boolean validMove = super.movePieceTo(position);
-        isEverMoved = isEverMoved || validMove;
-        return validMove;
+    public void physicalMoveTo(Position position) {
+        super.physicalMoveTo(position);
+        isEverMoved = true;
     }
 
     @Override

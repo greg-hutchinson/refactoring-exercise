@@ -9,13 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BishopTest {
     private Chessboard chessboard;
-    private Bishop bishop;
 
     @BeforeEach
     void initialize() {
-        chessboard = new Chessboard();
-        bishop = new Bishop(chessboard);
-        chessboard.putPieceAt(bishop, D4);
+        chessboard = Chessboard.init(BoardSettings.getDefaultSettings());
+        ChessPiece c1Piece = chessboard.pick(C1);
+        assertTrue(c1Piece.getName().equals(BishopPiece.class.getSimpleName()) && c1Piece.getColor() == PieceColor.White);
     }
 
 }

@@ -1,9 +1,6 @@
 package ca.attractors.chess;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Chessboard {
@@ -14,7 +11,9 @@ public class Chessboard {
     private PieceColor currentMoveColor;
     private boolean isEnded = false;
 
-    private Chessboard() {}
+    public Chessboard() {
+        this.currentMoveColor = PieceColor.White;
+    }
 
     public static Chessboard init(BoardSettings settings) {
         // White chess pieces
@@ -59,6 +58,10 @@ public class Chessboard {
         return board;
     }
 
+    void addPieces(ChessPiece... pieces) {
+        this.pieces.addAll(Arrays.stream(pieces).collect(Collectors.toList()));
+    }
+
     public PieceColor getCurrentMoveColor() {
         return currentMoveColor;
     }
@@ -92,14 +95,16 @@ public class Chessboard {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public void moveTo(ChessPiece piece, Position position) {
-        boolean moveSucceed = piece.movePieceTo(position);
-        if (moveSucceed) {
+    public boolean moveTo(ChessPiece piece, Position position) {
+        boolean isMoveValid = piece.canMovePieceTo(position);
+        if (isMoveValid) {
             removeTargetPositionPieceIfExists(position);
+            piece.physicalMoveTo(position);
             boolean isGameOver = determineGameOver();
-            if (isGameOver) return;
+            if (isGameOver) return true;
             toggleCurrentMoveColor();
         }
+        return isMoveValid;
     }
 
     private void removeTargetPositionPieceIfExists(Position position) {
