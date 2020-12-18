@@ -7,8 +7,7 @@ public class Knight extends ChessPiece {
 
     @Override
     protected boolean isValidMove(Position targetPosition) {
-        return !isTargetSameColour(targetPosition)
-                && isLShapedMove(targetPosition);
+        return isLShapedMove(targetPosition);
     }
 
     private boolean isLShapedMove(Position targetPosition) {

@@ -51,7 +51,11 @@ public abstract class ChessPiece {
         return true;
     }
 
+    //This method could probably contain the call to isTargetSameColor instead of having all the
+    //subclasses implement it.
     public boolean moveTo(Position targetPosition){
+        if (isTargetSameColour(targetPosition))
+            return false;
         if (!isValidMove(targetPosition)) {
             return false;
         }

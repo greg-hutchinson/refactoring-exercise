@@ -11,9 +11,7 @@ public class Bishop extends ChessPiece {
 
     @Override
     protected boolean isValidMove(Position targetPosition) {
-        return !isTargetSameColour(targetPosition)
-                && isDiagonalMove(targetPosition)
-                && isPathClear(targetPosition);
+        return isDiagonalMove(targetPosition) && isPathClear(targetPosition);
     }
 
     private boolean isDiagonalMove(Position targetPosition) {
