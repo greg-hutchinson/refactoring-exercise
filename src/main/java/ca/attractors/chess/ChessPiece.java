@@ -10,10 +10,12 @@ public class ChessPiece {
         this.chessboard = chessboard;
         this.color = color;
         chessboard.putPieceAt(this, position);
+        //Note - we don't have to set the position here since when the chessboard moves the piece,
+        //it always informs the piece that it has been moved. This is slick
     }
 
     //This method is called everytime a piece has been moved somewhere on the chessboard
-    // Code Smells
+    // Code Smells for some reason
     void pieceMoveTo(Position position) {
         this.position = position;
     }
@@ -32,6 +34,10 @@ public class ChessPiece {
         return color;
     }
 
+    // Code smell - maybe - maybe not - for now - yes
+    public void removed() {
+        position = null;
+    }
     public String getName() {
         return this.getClass().getSimpleName();
     }

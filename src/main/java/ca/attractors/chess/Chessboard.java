@@ -12,14 +12,20 @@ public class Chessboard {
 
     void putPieceAt(ChessPiece chessPiece, Position position) {
         pieces[position.getXOffset()][position.getYOffset()] = chessPiece;
+        if (chessPiece != null)
+            chessPiece.pieceMoveTo(position);
     }
 
     // Code Smells
     void movePieceTo(ChessPiece chessPiece, Position position) {
         Position old = getPositionOf(chessPiece);
+        ChessPiece piece = getPieceAt(position);
+        if (piece != null) {
+            piece.removed();
+        }
         putPieceAt(chessPiece, position);
-        chessPiece.pieceMoveTo(position);
         putPieceAt(null, old);
+
     }
 
     public Position getPositionOf(ChessPiece piece) {
