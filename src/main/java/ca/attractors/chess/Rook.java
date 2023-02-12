@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends ChessPiece {
-    protected Rook(PieceColor color, Chessboard chessboard, Position position) {
-        super(color, chessboard, position);
+    protected Rook(PieceColor color, Board board, Position position) {
+        super(color, board, position);
     }
 
     /**

@@ -1,9 +1,9 @@
 package ca.attractors.chess;
 
-public class Chessboard {
+public class Board {
     private ChessPiece[][] pieces = new ChessPiece[8][8];
 
-    public Chessboard() {
+    public Board() {
     }
 
     public ChessPiece getPieceAt(Position position) {

@@ -10,62 +10,64 @@ import static ca.attractors.chess.PieceColor.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RookTest {
-    private Chessboard chessboard;
+    private Board board;
 
     @BeforeEach
     void initialize() {
-        chessboard = new Chessboard();
+        board = new Board();
     }
+
+
 
     @Test
     void moveToNonHorizontalOrVerticalSpot() {
-        Rook rook1 = new Rook(White, chessboard, D4);
+        Rook rook1 = new Rook(White, board, A1);
         assertFalse(rook1.moveTo(B2));
     }
 
+
     @Test
     void moveVerticallyWithUnoccupiedCells() {
-        Rook rook = new Rook(White, chessboard, D4);
-        assertTrue(rook.moveTo(D8));
-        assertSame(rook.getPosition(), D8);
+        Rook rook = new Rook(White, board, A1);
+        assertTrue(rook.moveTo(A3));
+        assertSame(rook.getPosition(), A3);
     }
     @Test
     void moveVerticallyToCellWithOccupiedCellsInBetween() {
-        Rook rook1 = new Rook(White, chessboard, D4);
-        Rook rook2 = new Rook(Black, chessboard, D7);
-        assertFalse(rook1.moveTo(D8));
+        Rook rook1 = new Rook(White, board, A1);
+        Rook rook2 = new Rook(Black, board, A2);
+        assertFalse(rook1.moveTo(A3));
     }
 
     @Test
     void moveHorizontallyWithUnoccupiedCells() {
-        Rook rook1 = new Rook(White, chessboard, D4);
-        assertTrue(rook1.moveTo(A4));
-        assertSame(rook1.getPosition(), A4);
+        Rook rook1 = new Rook(White, board, A1);
+        assertTrue(rook1.moveTo(C1));
+        assertSame(rook1.getPosition(), C1);
     }
 
 
     @Test
     void moveHorizontallyToCellWithOccupiedCellsInBetween() {
-        Rook rook1 = new Rook(White, chessboard, D4);
-        Rook rook2 = new Rook(Black, chessboard, C4);
-        assertFalse(rook1.moveTo(A4));
+        Rook rook1 = new Rook(White, board, A1);
+        Rook rook2 = new Rook(Black, board, B1);
+        assertFalse(rook1.moveTo(C1));
     }
 
     @Test
     void moveToOccupiedCellOfSameColor() {
-        Rook rook1 = new Rook(White, chessboard, D4);
-        Rook rook2 = new Rook(White, chessboard, D3);
-        assertFalse(rook1.moveTo(D3));
+        Rook rook1 = new Rook(White, board, A1);
+        Rook rook2 = new Rook(White, board, A3);
+        assertFalse(rook1.moveTo(A3));
     }
 
     @Test
     void moveToOccupiedCellOfDifferentColor() {
-        Rook rook1 = new Rook(White, chessboard, D4);
-        Rook rook2 = new Rook(Black, chessboard,D1);
+        Rook rook1 = new Rook(White, board, A1);
+        Rook rook2 = new Rook(Black, board,D1);
         assertTrue(rook1.moveTo(D1));
         assertSame(rook1.getPosition(), D1);
         assertNull(rook2.getPosition());
-        assertNull (chessboard.getPieceAt(D4));
+        assertNull (board.getPieceAt(D4));
     }
-
 }

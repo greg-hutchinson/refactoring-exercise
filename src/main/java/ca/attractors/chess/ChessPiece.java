@@ -1,17 +1,17 @@
 package ca.attractors.chess;
 
 public class ChessPiece {
-    private final Chessboard chessboard;
+    private final Board board;
     private final PieceColor color;
 
-    public ChessPiece(PieceColor color, Chessboard chessboard, Position position) {
-        this.chessboard = chessboard;
+    public ChessPiece(PieceColor color, Board board, Position position) {
+        this.board = board;
         this.color = color;
-        chessboard.putPieceAt(this, position);
+        board.putPieceAt(this, position);
     }
 
-    public Chessboard getChessboard() {
-        return chessboard;
+    public Board getChessboard() {
+        return board;
     }
 
     public Position getPosition() {
