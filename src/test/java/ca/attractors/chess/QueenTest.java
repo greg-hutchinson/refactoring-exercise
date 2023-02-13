@@ -21,24 +21,24 @@ public class QueenTest {
     @Test
     void moveHorizontally() {
         Queen queen = new Queen(White, board, A1);
-//        assertTrue(queen.moveTo(C1));
+        assertTrue(queen.moveTo(C1));
     }
     @Test
     void moveVertically() {
         Queen queen = new Queen(White, board, A1);
-//        assertTrue(queen.moveTo(A4));
+        assertTrue(queen.moveTo(A4));
     }
 
     @Test
     void moveDiagonally() {
         Queen queen = new Queen(White, board, A1);
-//        assertTrue(queen.moveTo(C3));
+        assertTrue(queen.moveTo(C3));
     }
 
     @Test
     void moveToNonHorizontalOrNonVerticalOrNonSpot() {
         Queen queen = new Queen(White, board, A1);
-//        assertFalse(queen.moveTo(B3));
+        assertFalse(queen.moveTo(B3));
     }
 
 }

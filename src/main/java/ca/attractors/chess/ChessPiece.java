@@ -37,7 +37,7 @@ public class ChessPiece {
                 && targetPiece.getColor() == getColor());
     }
 
-    public boolean isPathFree(Position targetPosition) {
+    public boolean isStraightPathFree(Position targetPosition) {
         int start;
         int end;
 
@@ -46,7 +46,6 @@ public class ChessPiece {
             end = targetPosition.getXOffset();
         }
         else {
-//            (targetPosition.x == getPosition().x) {
             start = getPosition().getYOffset();
             end = targetPosition.getYOffset();
         }

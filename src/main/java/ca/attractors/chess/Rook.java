@@ -21,6 +21,6 @@ public class Rook extends ChessPiece {
     private boolean isValidMove(Position targetPosition) {
         return getPosition().isTargetPositionValid(targetPosition)
                 && isColorValid(targetPosition)
-                && isPathFree(targetPosition);
+                && isStraightPathFree(targetPosition);
     }
 }
