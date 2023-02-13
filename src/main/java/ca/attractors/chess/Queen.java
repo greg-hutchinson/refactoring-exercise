@@ -13,10 +13,6 @@ public class Queen extends ChessPiece {
         return false;
     }
 
-    public boolean isDiagonal(Position targetPosition) {
-        return Math.abs(targetPosition.x - getPosition().x) == Math.abs(targetPosition.y - getPosition().y);
-    }
-
     private boolean isValidMove(Position targetPosition) {
         return isColorValid(targetPosition)
                 && isPathFree(targetPosition);
@@ -25,7 +21,7 @@ public class Queen extends ChessPiece {
     private boolean isPathFree(Position targetPosition) {
         if (getPosition().isHorizontalOrVertical(targetPosition)) {
             return isStraightPathFree(targetPosition);
-        } else if (isDiagonal(targetPosition)) {
+        } else if (getPosition().isDiagonal(targetPosition)) {
             return isDiagonalPathFree(targetPosition);
         }
         return false;

@@ -39,4 +39,8 @@ public enum Position {
         return !(targetPosition.x != this.x
                 && targetPosition.y != this.y);
     }
+
+    public boolean isDiagonal(Position targetPosition) {
+        return Math.abs(targetPosition.x - this.x) == Math.abs(targetPosition.y - this.y);
+    }
 }
