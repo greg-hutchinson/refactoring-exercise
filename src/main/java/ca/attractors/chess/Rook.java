@@ -15,11 +15,11 @@ public class Rook extends ChessPiece {
      */
     public boolean moveTo(Position targetPosition) {
         //if it is not the same x or y coordinate it is not a rooks valid move at all
-        if (!checkPosition(targetPosition)){
+        if (checkPosition(targetPosition)){
             return false;
         }
         //Next - Check to make sure that if the target square is occupied it is not the same color
-        if (!checkColor(targetPosition)){
+        if (checkColor(targetPosition)){
             return false;
         }
         //Next - Get all the cells between the source and the target and ensure that they are empty.
