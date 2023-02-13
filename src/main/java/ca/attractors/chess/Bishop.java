@@ -7,5 +7,10 @@ public class Bishop extends ChessPiece {
         super(color, board,position);
     }
 
+    @Override
+    public boolean isMoveValid(Position targetPosition) {
+        return false;
+    }
+
 
 }

@@ -5,20 +5,7 @@ public class Rook extends ChessPiece {
         super(color, board, position);
     }
 
-    /**
-     * @param targetPosition - the position that we would like to move to
-     * @return true if we were able to complete the move. false otherwise
-     */
-    public boolean moveTo(Position targetPosition) {
-        if (!isMoveValid(targetPosition)) {
-            return false;
-        }
-        //If we get here - is is a valid move. Physically move the piece and answer true.
-        getChessboard().movePieceTo(this, targetPosition);
-        return true;
-    }
-
-    private boolean isMoveValid(Position targetPosition) {
+    public boolean isMoveValid(Position targetPosition) {
         if (!isMoveValidForPiece(targetPosition)
                 || isSquareOccupiedWithSameColor(targetPosition)) {
             return false;

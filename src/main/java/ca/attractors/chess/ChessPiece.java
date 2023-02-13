@@ -1,13 +1,13 @@
 package ca.attractors.chess;
 
-public class ChessPiece {
+public abstract class ChessPiece {
     private final Board board;
     private final PieceColor color;
 
     public ChessPiece(PieceColor color, Board board, Position position) {
         this.board = board;
         this.color = color;
-        board.putPieceAt(this, position);
+        board.putPieceAt(this, position); //VS: What about the case when we try to put a pieces at the position where another piece is?
     }
 
     public Board getChessboard() {
@@ -29,4 +29,19 @@ public class ChessPiece {
     public String toString() {
         return getName() + "{" + getColor() + " at: " + getPosition() +"}";
     }
+
+    /**
+     * @param targetPosition - the position that we would like to move to
+     * @return true if we were able to complete the move. false otherwise
+     */
+    public boolean moveTo(Position targetPosition) {
+        if (!isMoveValid(targetPosition)) {
+            return false;
+        }
+        //If we get here - is is a valid move. Physically move the piece and answer true.
+        getChessboard().movePieceTo(this, targetPosition);
+        return true;
+    }
+
+    public abstract boolean isMoveValid(Position targetPosition);
 }
