@@ -11,16 +11,20 @@ public class Rook extends ChessPiece {
      * @return true if we were able to complete the move. false otherwise
      */
     public boolean moveTo(Position targetPosition) {
-        if (isTargetPositionInvalid(targetPosition)
-            || isColorInvalid(targetPosition)
-            || isPathBlocked(targetPosition)){
-            return false;
+        if (isValidMove(targetPosition)) {
+            getChessboard().movePieceTo(this, targetPosition);
+            return true;
         }
-        getChessboard().movePieceTo(this, targetPosition);
-        return true;
+        return false;
     }
 
-    private boolean isPathBlocked(Position targetPosition) {
+    private boolean isValidMove(Position targetPosition) {
+        return isTargetPositionValid(targetPosition)
+                && isColorValid(targetPosition)
+                && isPathFree(targetPosition);
+    }
+
+    private boolean isPathFree(Position targetPosition) {
         int start;
         int end;
 
@@ -48,21 +52,21 @@ public class Rook extends ChessPiece {
             }
 
             if (getChessboard().getPieceAt(position) != null) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
-    private boolean isColorInvalid(Position targetPosition) {
+    private boolean isColorValid(Position targetPosition) {
         ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        return targetPiece != null
-                && targetPiece.getColor() == getColor();
+        return !(targetPiece != null
+                && targetPiece.getColor() == getColor());
     }
 
-    private boolean isTargetPositionInvalid(Position targetPosition) {
-        return targetPosition.x != getPosition().x
-                && targetPosition.y != getPosition().y;
+    private boolean isTargetPositionValid(Position targetPosition) {
+        return !(targetPosition.x != getPosition().x
+                && targetPosition.y != getPosition().y);
     }
 }
