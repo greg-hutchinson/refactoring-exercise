@@ -27,20 +27,15 @@ public class Queen extends ChessPiece {
     }
 
     private boolean isDiagonalPathFree(Position targetPosition) {
-        int startX = getPosition().getXOffset();
-        int endX = targetPosition.getXOffset();
-        int startY = getPosition().getYOffset();
-        int endY = targetPosition.getYOffset();
-
         int distance = Math.abs(getPosition().y - targetPosition.y);
 
         int incrementX = -1;
-        if (startX <= endX) {
+        if (getPosition().getXOffset() <= targetPosition.getXOffset()) {
             incrementX = 1;
         }
 
         int incrementY = -1;
-        if (startY <= endY) {
+        if (getPosition().getYOffset() <= targetPosition.getYOffset()) {
             incrementY = 1;
         }
 
