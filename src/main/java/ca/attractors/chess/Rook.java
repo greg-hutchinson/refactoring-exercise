@@ -1,8 +1,5 @@
 package ca.attractors.chess;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Rook extends ChessPiece {
     protected Rook(PieceColor color, Board board, Position position) {
         super(color, board, position);
@@ -36,26 +33,20 @@ public class Rook extends ChessPiece {
             end = targetPosition.getYOffset();
         }
 
-        int increment = 0;
-        if (start > end) {
-            increment = -1;
-        }
-        else {
+        int increment = -1;
+        if (start <= end) {
             increment = 1;
         }
 
-        List<Position> positions = new ArrayList<>();
-
+        Position position;
         for (int v = start+increment; v != end; v = v + increment) {
             if (targetPosition.y == getPosition().y) {
-                positions.add(Position.getPositionFor(v, targetPosition.getYOffset()));
+                position = Position.getPositionFor(v, targetPosition.getYOffset());
             }
             else {
-                positions.add(Position.getPositionFor(targetPosition.getXOffset(), v));
+                position = Position.getPositionFor(targetPosition.getXOffset(), v);
             }
-        }
 
-        for (Position position: positions) {
             if (getChessboard().getPieceAt(position) != null) {
                 return true;
             }
