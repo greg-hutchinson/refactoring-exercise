@@ -68,6 +68,6 @@ public class RookTest {
         assertTrue(rook1.moveTo(D1));
         assertSame(rook1.getPosition(), D1);
         assertNull(rook2.getPosition());
-        assertNull (board.getPieceAt(D4));
+        assertNull (board.getPieceAt(A1));
     }
 }
