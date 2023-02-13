@@ -14,24 +14,16 @@ public class Rook extends ChessPiece {
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
         // the increment might be positive or negative.
-        if (isVerticalMove(targetPosition) &&
+        if (targetPosition.isVerticalMove(this) &&
                 !isVerticalMoveValid(targetPosition))  {
             return false;
         }
-        return !isHorizontalMove(targetPosition)
+        return !targetPosition.isHorizontalMove(this)
                 || isHorizontalMoveValid(targetPosition);
     }
 
     private boolean isMoveValidForPiece(Position targetPosition) {
-        return isVerticalMove(targetPosition) || isHorizontalMove(targetPosition);
-    }
-
-    private boolean isVerticalMove(Position targetPosition) {
-        return targetPosition.x == getPosition().x;
-    }
-
-    private boolean isHorizontalMove(Position targetPosition) {
-        return targetPosition.y == getPosition().y;
+        return targetPosition.isVerticalMove(this) || targetPosition.isHorizontalMove(this);
     }
 
     private boolean isSquareOccupiedWithSameColor(Position targetPosition) {

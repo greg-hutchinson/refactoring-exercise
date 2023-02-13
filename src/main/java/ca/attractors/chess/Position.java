@@ -10,8 +10,8 @@ public enum Position {
     G1('g',1), G2('g', 2), G3('g', 3), G4('g', 4), G5('g', 5), G6('g', 6), G7('g', 7), G8('g', 8),
     H1('h',1), H2('h', 2), H3('h', 3), H4('h', 4), H5('h', 5), H6('h', 6), H7('h', 7), H8('h', 8);
 
-    char x;
-    int y;
+    final char x;
+    final int y;
 
     Position(char x, int y) {
         this.x = x;
@@ -34,4 +34,13 @@ public enum Position {
         }
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
     }
+
+    boolean isHorizontalMove(ChessPiece chessPiece) {
+        return x != chessPiece.getPosition().x && y == chessPiece.getPosition().y;
+    }
+
+    boolean isVerticalMove(ChessPiece chessPiece) {
+        return x == chessPiece.getPosition().x && y != chessPiece.getPosition().y;
+    }
+
 }
