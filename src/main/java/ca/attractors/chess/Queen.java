@@ -13,54 +13,45 @@ public class Queen extends ChessPiece {
         return false;
     }
 
+    public boolean isDiagonal(Position targetPosition) {
+        return Math.abs(targetPosition.x - getPosition().x) == Math.abs(targetPosition.y - getPosition().y);
+    }
+
     private boolean isValidMove(Position targetPosition) {
-        return getPosition().isTargetPositionValid(targetPosition)
-                && isColorValid(targetPosition)
+        return isColorValid(targetPosition)
                 && isPathFree(targetPosition);
     }
 
-    private boolean isDiagonal(Position targetPosition) {
-        return targetPosition.x != getPosition().x
-                && targetPosition.y != getPosition().y;
-    }
-
     private boolean isPathFree(Position targetPosition) {
-        if (isDiagonal(targetPosition)) {
-            return isNonDiagonalPathFree(targetPosition);
+        if (getPosition().isHorizontalOrVertical(targetPosition)) {
+            return isStraightPathFree(targetPosition);
+        } else if (isDiagonal(targetPosition)) {
+            return isDiagonalPathFree(targetPosition);
         }
-        return isStraightPathFree(targetPosition);
+        return false;
     }
 
-    private boolean isNonDiagonalPathFree(Position targetPosition) {
-        int start;
-        int end;
+    private boolean isDiagonalPathFree(Position targetPosition) {
+        int startX = getPosition().getXOffset();
+        int endX = targetPosition.getXOffset();
+        int startY = getPosition().getYOffset();
+        int endY = targetPosition.getYOffset();
 
-        if (targetPosition.y == getPosition().y) {
-            start = getPosition().getXOffset();
-            end = targetPosition.getXOffset();
-        }
-        else if (targetPosition.x == getPosition().x) {
-            start = getPosition().getYOffset();
-            end = targetPosition.getYOffset();
-        }
-        else {
-            return false;
+        int distance = Math.abs(getPosition().y - targetPosition.y);
+
+        int incrementX = -1;
+        if (startX <= endX) {
+            incrementX = 1;
         }
 
-        int increment = -1;
-        if (start <= end) {
-            increment = 1;
+        int incrementY = -1;
+        if (startY <= endY) {
+            incrementY = 1;
         }
 
         Position position;
-        for (int v = start+increment; v != end; v = v + increment) {
-            if (targetPosition.y == getPosition().y) {
-                position = Position.getPositionFor(v, targetPosition.getYOffset());
-            }
-            else {
-                position = Position.getPositionFor(targetPosition.getXOffset(), v);
-            }
-
+        for (int v = 1; v != distance + 1; v++) {
+            position = Position.getPositionFor(v * incrementX, v * incrementY);
             if (getChessboard().getPieceAt(position) != null) {
                 return false;
             }
