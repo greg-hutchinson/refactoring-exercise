@@ -18,13 +18,6 @@ public class QueenTest {
     }
 
 
-
-    @Test
-    void moveToNonHorizontalOrNonVerticalOrNonSpot() {
-        Queen queen = new Queen(White, board, A1);
-//        assertFalse(queen.moveTo(B3));
-    }
-
     @Test
     void moveHorizontally() {
         Queen queen = new Queen(White, board, A1);
@@ -42,5 +35,10 @@ public class QueenTest {
 //        assertTrue(queen.moveTo(C3));
     }
 
+    @Test
+    void moveToNonHorizontalOrNonVerticalOrNonSpot() {
+        Queen queen = new Queen(White, board, A1);
+//        assertFalse(queen.moveTo(B3));
+    }
 
 }
