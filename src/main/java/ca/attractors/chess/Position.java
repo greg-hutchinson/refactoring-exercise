@@ -35,12 +35,16 @@ public enum Position {
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
     }
 
-    boolean isHorizontalMove(ChessPiece chessPiece) {
-        return x != chessPiece.getPosition().x && y == chessPiece.getPosition().y;
+    boolean isHorizontalMove(Position targetPosition) {
+        return x != targetPosition.x && y == targetPosition.y;
     }
 
-    boolean isVerticalMove(ChessPiece chessPiece) {
-        return x == chessPiece.getPosition().x && y != chessPiece.getPosition().y;
+    boolean isVerticalMove(Position targetPosition) {
+        return x == targetPosition.x && y != targetPosition.y;
+    }
+
+    boolean isDiagonalMove(Position targetPosition) {
+        return Math.abs(x - targetPosition.x) == Math.abs(y - targetPosition.y);
     }
 
 }
