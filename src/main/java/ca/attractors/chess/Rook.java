@@ -19,54 +19,8 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isValidMove(Position targetPosition) {
-        return isTargetPositionValid(targetPosition)
+        return getPosition().isTargetPositionValid(targetPosition)
                 && isColorValid(targetPosition)
                 && isPathFree(targetPosition);
-    }
-
-    private boolean isPathFree(Position targetPosition) {
-        int start;
-        int end;
-
-        if (targetPosition.y == getPosition().y) {
-            start = getPosition().getXOffset();
-            end = targetPosition.getXOffset();
-        }
-        else {
-            start = getPosition().getYOffset();
-            end = targetPosition.getYOffset();
-        }
-
-        int increment = -1;
-        if (start <= end) {
-            increment = 1;
-        }
-
-        Position position;
-        for (int v = start+increment; v != end; v = v + increment) {
-            if (targetPosition.y == getPosition().y) {
-                position = Position.getPositionFor(v, targetPosition.getYOffset());
-            }
-            else {
-                position = Position.getPositionFor(targetPosition.getXOffset(), v);
-            }
-
-            if (getChessboard().getPieceAt(position) != null) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private boolean isColorValid(Position targetPosition) {
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        return !(targetPiece != null
-                && targetPiece.getColor() == getColor());
-    }
-
-    private boolean isTargetPositionValid(Position targetPosition) {
-        return !(targetPosition.x != getPosition().x
-                && targetPosition.y != getPosition().y);
     }
 }
