@@ -33,8 +33,7 @@ public class ChessPiece {
 
     public boolean isColorValid(Position targetPosition) {
         ChessPiece targetPiece = this.board.getPieceAt(targetPosition);
-        return !(targetPiece != null
-                && targetPiece.getColor() == getColor());
+        return !(targetPiece != null && targetPiece.getColor() == getColor());
     }
 
     public boolean isStraightPathFree(Position targetPosition) {
@@ -44,8 +43,7 @@ public class ChessPiece {
         if (targetPosition.y == getPosition().y) {
             start = getPosition().getXOffset();
             end = targetPosition.getXOffset();
-        }
-        else {
+        } else {
             start = getPosition().getYOffset();
             end = targetPosition.getYOffset();
         }
@@ -56,11 +54,10 @@ public class ChessPiece {
         }
 
         Position position;
-        for (int v = start+increment; v != end; v = v + increment) {
+        for (int v = start + increment; v != end; v = v + increment) {
             if (targetPosition.y == getPosition().y) {
                 position = Position.getPositionFor(v, targetPosition.getYOffset());
-            }
-            else {
+            } else {
                 position = Position.getPositionFor(targetPosition.getXOffset(), v);
             }
 

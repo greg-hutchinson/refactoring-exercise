@@ -14,8 +14,7 @@ public class Queen extends ChessPiece {
     }
 
     private boolean isValidMove(Position targetPosition) {
-        return isColorValid(targetPosition)
-                && isPathFree(targetPosition);
+        return isColorValid(targetPosition) && isPathFree(targetPosition);
     }
 
     private boolean isPathFree(Position targetPosition) {

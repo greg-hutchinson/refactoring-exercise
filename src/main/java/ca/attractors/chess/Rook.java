@@ -6,7 +6,6 @@ public class Rook extends ChessPiece {
     }
 
     /**
-     *
      * @param targetPosition - the position that we would like to move to
      * @return true if we were able to complete the move. false otherwise
      */
@@ -19,8 +18,6 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isValidMove(Position targetPosition) {
-        return getPosition().isHorizontalOrVertical(targetPosition)
-                && isColorValid(targetPosition)
-                && isStraightPathFree(targetPosition);
+        return getPosition().isHorizontalOrVertical(targetPosition) && isColorValid(targetPosition) && isStraightPathFree(targetPosition);
     }
 }
