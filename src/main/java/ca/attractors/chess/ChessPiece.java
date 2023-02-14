@@ -35,16 +35,11 @@ public abstract class ChessPiece {
         return getName() + "{" + getColor() + " at: " + getPosition() + "}";
     }
 
-    /**
-     * @param targetPosition - the position that we would like to move to
-     * @return true if we were able to complete the move. false otherwise
-     */
     public boolean moveTo(Position targetPosition) {
         Move move = new Move(this, targetPosition);
         if (!move.isValid()) {
             return false;
         }
-        //If we get here - is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
