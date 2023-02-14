@@ -58,15 +58,18 @@ public enum MoveDirection {
     }
 
     private static Stream<MoveDirection> getMoveDirections(int horizontalShift, int verticalShift) {
-        MoveDirection[] moveDirections = null;
-        if (horizontalShift == 0) {
-            moveDirections = VERTICAL_ONLY;
-        } else if (verticalShift == 0) {
-            moveDirections = HORIZONTAL_ONLY;
-        } else if (Math.abs(horizontalShift) == Math.abs(verticalShift)) {
-            moveDirections = DIAGONAL_ONLY;
-        }
+        MoveDirection[] moveDirections = getMoveDirectionsArray(horizontalShift, verticalShift);
         return (moveDirections != null) ? Arrays.stream(moveDirections) : Stream.empty();
+    }
+
+    private static MoveDirection[] getMoveDirectionsArray(int horizontalShift, int verticalShift) {
+        if (horizontalShift == 0)
+            return VERTICAL_ONLY;
+        if (verticalShift == 0)
+            return HORIZONTAL_ONLY;
+        if (Math.abs(horizontalShift) == Math.abs(verticalShift))
+            return DIAGONAL_ONLY;
+        return null;
     }
 
     private static Optional<MoveDirection> getMoveDirection(Stream<MoveDirection> moveDirections,
