@@ -82,10 +82,7 @@ public enum MoveDirection {
     }
 
     private static int getIncrement(int shift) {
-        if (shift == 0) {
-            return 0;
-        }
-        return shift > 0 ? 1 : -1;
+        return (int) Math.signum(shift);
     }
 
 }
