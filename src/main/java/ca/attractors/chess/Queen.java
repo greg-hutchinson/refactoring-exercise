@@ -5,15 +5,7 @@ public class Queen extends ChessPiece {
         super(color, board, position);
     }
 
-    public boolean moveTo(Position targetPosition) {
-        if (isValidMove(targetPosition)) {
-            getChessboard().movePieceTo(this, targetPosition);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isValidMove(Position targetPosition) {
+    protected boolean isValidMove(Position targetPosition) {
         return isColorValid(targetPosition) && isPathFree(targetPosition);
     }
 
