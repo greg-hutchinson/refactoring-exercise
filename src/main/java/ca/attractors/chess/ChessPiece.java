@@ -10,9 +10,9 @@ public abstract class ChessPiece {
         board.putPieceAt(this, position); //VS: What about the case when we try to put a pieces at the position where another piece is?
     }
 
-    public abstract MoveDirection[] getValidMoveDirections();
+    protected abstract MoveDirection[] getValidMoveDirections();
 
-    public abstract MoveLimit getMoveLimit();
+    protected abstract MoveLimit getMoveLimit();
 
     public Board getChessboard() {
         return board;

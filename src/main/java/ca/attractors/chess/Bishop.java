@@ -8,12 +8,12 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public MoveDirection[] getValidMoveDirections() {
+    protected MoveDirection[] getValidMoveDirections() {
         return MoveDirection.DIAGONAL_ONLY;
     }
 
     @Override
-    public MoveLimit getMoveLimit() {
+    protected MoveLimit getMoveLimit() {
         return MoveLimit.NoLimit;
     }
 

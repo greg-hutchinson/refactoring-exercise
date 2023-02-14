@@ -17,12 +17,12 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public MoveDirection[] getValidMoveDirections() {
+    protected MoveDirection[] getValidMoveDirections() {
         return MOVE_DIRECTIONS;
     }
 
     @Override
-    public MoveLimit getMoveLimit() {
+    protected MoveLimit getMoveLimit() {
         return MoveLimit.NoLimit;
     }
 
