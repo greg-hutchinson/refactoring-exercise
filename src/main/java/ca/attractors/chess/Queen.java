@@ -12,7 +12,8 @@ public class Queen extends ChessPiece {
     private boolean isPathFree(Position targetPosition) {
         if (getPosition().isHorizontalOrVertical(targetPosition)) {
             return isStraightPathFree(targetPosition);
-        } else if (getPosition().isDiagonal(targetPosition)) {
+        }
+        if (getPosition().isDiagonal(targetPosition)) {
             return isDiagonalPathFree(targetPosition);
         }
         return false;
