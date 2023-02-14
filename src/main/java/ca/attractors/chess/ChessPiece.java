@@ -7,7 +7,11 @@ public abstract class ChessPiece {
     public ChessPiece(PieceColor color, Board board, Position position) {
         this.board = board;
         this.color = color;
-        board.putPieceAt(this, position); //VS: What about the case when we try to put a pieces at the position where another piece is?
+        ChessPiece piece = board.getPieceAt(position);
+        if (piece != null) {
+            throw new IllegalStateException("Can not instantiate a piece at the same position as an existing piece at position: " + position);
+        }
+        board.putPieceAt(this, position);
     }
 
     protected abstract MoveDirection[] getValidMoveDirections();
