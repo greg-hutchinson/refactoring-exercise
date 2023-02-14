@@ -10,6 +10,10 @@ public abstract class ChessPiece {
         board.putPieceAt(this, position); //VS: What about the case when we try to put a pieces at the position where another piece is?
     }
 
+    public abstract MoveDirection[] getValidMoveDirections();
+
+    public abstract MoveLimit getMoveLimit();
+
     public Board getChessboard() {
         return board;
     }
@@ -25,9 +29,10 @@ public abstract class ChessPiece {
     public String getName() {
         return this.getClass().getSimpleName();
     }
+
     @Override
     public String toString() {
-        return getName() + "{" + getColor() + " at: " + getPosition() +"}";
+        return getName() + "{" + getColor() + " at: " + getPosition() + "}";
     }
 
     /**
@@ -35,21 +40,13 @@ public abstract class ChessPiece {
      * @return true if we were able to complete the move. false otherwise
      */
     public boolean moveTo(Position targetPosition) {
-        if (!isMoveValid(targetPosition)) {
+        Move move = new Move(this, targetPosition);
+        if (!move.isValid()) {
             return false;
         }
-        //If we get here - is is a valid move. Physically move the piece and answer true.
+        //If we get here - is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
 
-    public abstract boolean isMoveValid(Position targetPosition);
-
-    protected boolean isPositionOccupiedWithSameColor(Position targetPosition) {
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        if (targetPiece == null) {
-            return false;
-        }
-        return targetPiece.getColor() == getColor();
-    }
 }

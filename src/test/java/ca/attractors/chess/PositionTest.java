@@ -10,7 +10,7 @@ public class PositionTest {
     void getters() {
         assertEquals(0, A1.getXOffset());
         assertEquals(0, A1.getYOffset());
-        assertEquals('a', A1.x);
-        assertEquals(1, A1.y);
+        assertEquals('a', A1.getX());
+        assertEquals(1, A1.getY());
     }
 }

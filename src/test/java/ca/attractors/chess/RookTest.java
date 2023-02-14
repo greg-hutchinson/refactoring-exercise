@@ -35,7 +35,7 @@ public class RookTest {
     @Test
     void moveVerticallyToCellWithOccupiedCellsInBetween() {
         Rook rook1 = new Rook(White, board, A1);
-        Rook rook2 = new Rook(Black, board, A2);
+        new Rook(Black, board, A2);
         assertFalse(rook1.moveTo(A3));
     }
 
@@ -50,14 +50,14 @@ public class RookTest {
     @Test
     void moveHorizontallyToCellWithOccupiedCellsInBetween() {
         Rook rook1 = new Rook(White, board, A1);
-        Rook rook2 = new Rook(Black, board, B1);
+        new Rook(Black, board, B1);
         assertFalse(rook1.moveTo(C1));
     }
 
     @Test
     void moveToOccupiedCellOfSameColor() {
         Rook rook1 = new Rook(White, board, A1);
-        Rook rook2 = new Rook(White, board, A3);
+        new Rook(White, board, A3);
         assertFalse(rook1.moveTo(A3));
     }
 
@@ -68,6 +68,6 @@ public class RookTest {
         assertTrue(rook1.moveTo(D1));
         assertSame(rook1.getPosition(), D1);
         assertNull(rook2.getPosition());
-        assertNull (board.getPieceAt(D4));
+        assertEquals(rook1, board.getPieceAt(D1));
     }
 }

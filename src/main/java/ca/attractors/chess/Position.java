@@ -10,19 +10,36 @@ public enum Position {
     G1('g',1), G2('g', 2), G3('g', 3), G4('g', 4), G5('g', 5), G6('g', 6), G7('g', 7), G8('g', 8),
     H1('h',1), H2('h', 2), H3('h', 3), H4('h', 4), H5('h', 5), H6('h', 6), H7('h', 7), H8('h', 8);
 
-    final char x;
-    final int y;
+    private final char x;
+    private final int y;
 
     Position(char x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    public char getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     int getXOffset() {
         return x - 'a';
     }
+
     int getYOffset() {
         return y - 1;
+    }
+
+    int getHorizontalShift(Position target) {
+        return target.getXOffset() - getXOffset();
+    }
+
+    int getVerticalShift(Position target) {
+        return target.getYOffset() - getYOffset();
     }
 
     static Position getPositionFor (int xOffset, int yOffset) {
@@ -33,18 +50,6 @@ public enum Position {
             }
         }
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
-    }
-
-    boolean isHorizontalMove(Position targetPosition) {
-        return x != targetPosition.x && y == targetPosition.y;
-    }
-
-    boolean isVerticalMove(Position targetPosition) {
-        return x == targetPosition.x && y != targetPosition.y;
-    }
-
-    boolean isDiagonalMove(Position targetPosition) {
-        return Math.abs(x - targetPosition.x) == Math.abs(y - targetPosition.y);
     }
 
 }
