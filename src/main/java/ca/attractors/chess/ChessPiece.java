@@ -37,22 +37,29 @@ public abstract class ChessPiece {
     }
 
     public boolean isStraightPathFree(Position targetPosition) {
-        int start;
-        int end;
 
-        if (targetPosition.y == getPosition().y) {
-            start = getPosition().getXOffset();
-            end = targetPosition.getXOffset();
-        } else {
-            start = getPosition().getYOffset();
-            end = targetPosition.getYOffset();
-        }
-
+        int start = getStart(targetPosition);
+        int end = getEnd(targetPosition);
         int increment = -1;
         if (start <= end) {
             increment = 1;
         }
 
+        return !isPathBlockedTo(targetPosition, start, end, increment);
+    }
+
+    private int getStart(Position targetPosition) {
+        if (targetPosition.y == getPosition().y)
+            return getPosition().getXOffset();
+        return getPosition().getYOffset();
+    }
+    private int getEnd(Position targetPosition) {
+        if (targetPosition.y == getPosition().y)
+            return targetPosition.getXOffset();
+        return targetPosition.getYOffset();
+    }
+
+    private boolean isPathBlockedTo(Position targetPosition, int start, int end, int increment) {
         Position position;
         for (int v = start + increment; v != end; v = v + increment) {
             if (targetPosition.y == getPosition().y) {
@@ -62,11 +69,10 @@ public abstract class ChessPiece {
             }
 
             if (getChessboard().getPieceAt(position) != null) {
-                return false;
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
 
     /**
