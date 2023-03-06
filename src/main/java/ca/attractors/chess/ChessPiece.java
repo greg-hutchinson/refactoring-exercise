@@ -1,6 +1,6 @@
 package ca.attractors.chess;
 
-public class ChessPiece {
+public abstract class ChessPiece {
     private final Board board;
     private final PieceColor color;
 
@@ -29,4 +29,20 @@ public class ChessPiece {
     public String toString() {
         return getName() + "{" + getColor() + " at: " + getPosition() +"}";
     }
+
+    /**
+     *
+     * @param targetPosition - the position that we would like to move to
+     * @return true if we were able to complete the move. false otherwise
+     */
+    public boolean moveTo(Position targetPosition) {
+        if (isValidMove(targetPosition)) {
+            //If we get here - is is a valid move. Physically move the piece and answer true.
+            getChessboard().movePieceTo(this, targetPosition);
+            return true;
+        }
+        return false;
+    }
+
+    protected abstract boolean isValidMove(Position targetPosition);
 }
