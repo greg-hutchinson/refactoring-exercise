@@ -8,16 +8,8 @@ public class Queen extends ChessPiece {
         super(color, board, position);
     }
 
-    public boolean moveTo(Position targetPosition) {
-        if (isMovementValid(targetPosition)) {
-            getChessboard().movePieceTo(this, targetPosition);
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isMovementValid(Position targetPosition) {
+    @Override
+    protected boolean isMovementValid(Position targetPosition) {
         if(!getPosition().isTargetPositionHorizontal(targetPosition)&&
                 !getPosition().isTargetPositionVertical(targetPosition)&&
                 !getPosition().isTargetPositionDiagonal(targetPosition)){
@@ -42,22 +34,7 @@ public class Queen extends ChessPiece {
             positions = getPosition().getPositionsForDiagonalMovementPath(targetPosition);
         }
 
-        if (checkMovementPathForOtherPieces(positions)) return true;
+        if (getChessboard().checkMovementPathForOtherPieces(positions)) return true;
         return false;
     }
-
-    private boolean checkMovementPathForOtherPieces(List<Position> positions) {
-        for (Position position: positions) {
-            if (isPositionFilled(position)) return true;
-        }
-        return false;
-    }
-
-    private boolean isPositionFilled(Position position) {
-        if (getChessboard().getPieceAt(position) != null) {
-            return true;
-        }
-        return false;
-    }
-
 }

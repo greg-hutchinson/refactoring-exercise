@@ -1,5 +1,7 @@
 package ca.attractors.chess;
 
+import java.util.List;
+
 public class Board {
     private ChessPiece[][] pieces = new ChessPiece[8][8];
 
@@ -19,6 +21,20 @@ public class Board {
         if (targetPiece != null) {
             if (targetPiece.getColor() == pieceColor)
                 return true;
+        }
+        return false;
+    }
+
+    public boolean checkMovementPathForOtherPieces(List<Position> positions) {
+        for (Position position: positions) {
+            if (isPositionFilled(position)) return true;
+        }
+        return false;
+    }
+
+    public boolean isPositionFilled(Position position) {
+        if (getPieceAt(position) != null) {
+            return true;
         }
         return false;
     }

@@ -8,21 +8,8 @@ public class Rook extends ChessPiece {
         super(color, board, position);
     }
 
-    /**
-     *
-     * @param targetPosition - the position that we would like to move to
-     * @return true if we were able to complete the move. false otherwise
-     */
-    public boolean moveTo(Position targetPosition) {
-        if (isMovementValid(targetPosition)) {
-            getChessboard().movePieceTo(this, targetPosition);
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isMovementValid(Position targetPosition) {
+    @Override
+    protected boolean isMovementValid(Position targetPosition) {
         if(!getPosition().isTargetPositionHorizontal(targetPosition)&&
                 !getPosition().isTargetPositionVertical(targetPosition)){
             return false;
@@ -37,27 +24,13 @@ public class Rook extends ChessPiece {
     private boolean isPathNotEmpty(Position targetPosition) {
         List<Position> positions = new ArrayList<>();
         if (getPosition().isTargetPositionVertical(targetPosition)) {
-            positions = getPosition().getPositionsForVerticalMovementPath(targetPosition);
-        }
+        positions = getPosition().getPositionsForVerticalMovementPath(targetPosition);
+    }
         if (getPosition().isTargetPositionHorizontal(targetPosition)) {
             positions = getPosition().getPositionsForHorizontalMovementPath(targetPosition);
         }
 
-        if (checkMovementPathForOtherPieces(positions)) return true;
-        return false;
-    }
-
-    private boolean checkMovementPathForOtherPieces(List<Position> positions) {
-        for (Position position: positions) {
-            if (isPositionFilled(position)) return true;
-        }
-        return false;
-    }
-
-    private boolean isPositionFilled(Position position) {
-        if (getChessboard().getPieceAt(position) != null) {
-            return true;
-        }
+        if (getChessboard().checkMovementPathForOtherPieces(positions)) return true;
         return false;
     }
 }
