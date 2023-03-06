@@ -14,7 +14,6 @@ public class Rook extends ChessPiece {
      * @return true if we were able to complete the move. false otherwise
      */
     public boolean moveTo(Position targetPosition) {
-
        if (isValidMove(targetPosition)) {
            getChessboard().movePieceTo(this, targetPosition);
            return true;
@@ -37,7 +36,8 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isHorizontalOrVerticalMove(Position targetPosition) {
-        return targetPosition.x == getPosition().x || targetPosition.y == getPosition().y;
+        return Position.isHorizontalMove(getPosition(), targetPosition)
+                || Position.isVerticalMove(getPosition(), targetPosition);
     }
 
     private boolean isPositionOccupiedBySameColour(Position targetPosition) {
@@ -51,12 +51,12 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isMovementPathClear(Position targetPosition) {
-        if (targetPosition.x == getPosition().x) {
-            return !isHorizontalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
+        if (Position.isVerticalMove(getPosition(), targetPosition)) {
+            return !isVerticalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
         }
 
-        if (targetPosition.y == getPosition().y) {
-            return !isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
+        if (Position.isHorizontalMove(getPosition(), targetPosition)) {
+            return !isHorizontalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
         }
 
         return true;
@@ -90,13 +90,13 @@ public class Rook extends ChessPiece {
         return 1;
     }
 
-    private boolean isHorizontalMovementObstructed(int start, int end, Position targetPosition) {
+    private boolean isVerticalMovementObstructed(int start, int end, Position targetPosition) {
         return getHorizontalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
                 .stream()
                 .anyMatch(position -> getChessboard().getPieceAt(position) != null);
     }
 
-    private boolean isVerticalMovementObstructed(int start, int end, Position targetPosition) {
+    private boolean isHorizontalMovementObstructed(int start, int end, Position targetPosition) {
         return getVerticalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
                 .stream()
                 .anyMatch(position -> getChessboard().getPieceAt(position) != null);
