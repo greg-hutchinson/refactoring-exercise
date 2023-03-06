@@ -78,6 +78,8 @@ public class Rook extends ChessPiece {
 
     private boolean isMoveValid(Position targetPosition) {
 
+        if(Position.isMoveDiagonal(targetPosition, getPosition())) return false;
+
         //Next - Check to make sure that if the target square is occupied it is not the same color
         if (isOccupiedTargetPieceColorDifferent(targetPosition)) return false;
 
