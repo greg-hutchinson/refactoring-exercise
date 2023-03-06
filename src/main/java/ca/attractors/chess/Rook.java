@@ -42,11 +42,7 @@ public class Rook extends ChessPiece {
     private boolean isInvalidVerticalMove(Position targetPosition) {
         int start = getPosition().getXOffset();
         int end = targetPosition.getXOffset();
-        int increment = 0;
-        if (start > end)
-            increment = -1;
-        else
-            increment = 1;
+        int increment = targetPosition.getIncrement(start, end);
         List<Position> positions = new ArrayList<>();
         for (int x = start+increment; x != end; x = x + increment) {
             positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
@@ -60,11 +56,7 @@ public class Rook extends ChessPiece {
     private boolean isInvalidHorizontalMove(Position targetPosition) {
         int start = getPosition().getYOffset();
         int end = targetPosition.getYOffset();
-        int increment = 0;
-        if (start > end)
-            increment = -1;
-        else
-            increment = 1;
+        int increment = targetPosition.getIncrement(start, end);
         List<Position> positions = new ArrayList<>();
         for (int y = start+increment; y != end; y = y + increment) {
             positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
@@ -76,10 +68,7 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isSuccessfulMove(Position position) {
-        if (getChessboard().getPieceAt(position) != null) {
-            return true;
-        }
-        return false;
+        return getChessboard().getPieceAt(position) != null;
     }
 
     private boolean isSquareOccupiedBySameColor(Position targetPosition) {
@@ -88,5 +77,4 @@ public class Rook extends ChessPiece {
             return targetPiece.getColor() == getColor();
         return false;
     }
-    
 }

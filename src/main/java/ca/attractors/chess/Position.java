@@ -12,6 +12,7 @@ public enum Position {
 
     char x;
     int y;
+    int increment = 0;
 
     Position(char x, int y) {
         this.x = x;
@@ -33,5 +34,13 @@ public enum Position {
             }
         }
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
+    }
+
+    public int getIncrement(int start, int end) {
+        if (start > end)
+            increment = -1;
+        else
+            increment = 1;
+        return increment;
     }
 }
