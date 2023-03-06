@@ -59,16 +59,16 @@ public class Rook extends ChessPiece {
             else
                 increment = 1;
             List<Position> positions = new ArrayList<>();
-            for (int y = start+increment; y != end; y = y + increment) {
-                positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
-            }
-            for (Position position: positions) {
-                if (getChessboard().getPieceAt(position) != null) {
-                    return true;
-                }
-            }
+            getPositionsInHorizontalMovementPath(targetPosition.getXOffset(), start, end, increment, positions);
+            if (checkMovementPathForOtherPieces(positions)) return true;
         }
         return false;
+    }
+
+    private static void getPositionsInHorizontalMovementPath(int targetPositionOffset, int start, int end, int increment, List<Position> positions) {
+        for (int y = start + increment; y != end; y = y + increment) {
+            positions.add(Position.getPositionFor(targetPositionOffset, y));
+        }
     }
 
     private boolean isVerticalPathNotEmpty(Position targetPosition) {
@@ -81,14 +81,28 @@ public class Rook extends ChessPiece {
             else
                 increment = 1;
             List<Position> positions = new ArrayList<>();
-            for (int x = start+increment; x != end; x = x + increment) {
-                positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
-            }
-            for (Position position: positions) {
-                if (getChessboard().getPieceAt(position) != null) {
-                    return true;
-                }
-            }
+            getPositionsInVerticalMovementPath(targetPosition.getYOffset(), start, end, increment, positions);
+            if (checkMovementPathForOtherPieces(positions)) return true;
+        }
+        return false;
+    }
+
+    private static void getPositionsInVerticalMovementPath(int targetPositionOffset, int start, int end, int increment, List<Position> positions) {
+        for (int x = start + increment; x != end; x = x + increment) {
+            positions.add(Position.getPositionFor(x, targetPositionOffset));
+        }
+    }
+
+    private boolean checkMovementPathForOtherPieces(List<Position> positions) {
+        for (Position position: positions) {
+            if (isPositionFilled(position)) return true;
+        }
+        return false;
+    }
+
+    private boolean isPositionFilled(Position position) {
+        if (getChessboard().getPieceAt(position) != null) {
+            return true;
         }
         return false;
     }
