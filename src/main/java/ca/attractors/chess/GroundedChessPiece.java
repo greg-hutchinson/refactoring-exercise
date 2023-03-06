@@ -19,4 +19,16 @@ public abstract class GroundedChessPiece extends ChessPiece {
         return false;
     }
 
+    @Override
+    protected boolean isValidMove(Position targetPosition) {
+        if (!isTargetPositionCoordsValid(targetPosition)) return false;
+
+        if (isPositionOccupiedBySameColour(targetPosition)) return false;
+
+        if (isPathImpeded(targetPosition)) return false;
+
+        return true;
+    }
+
+    protected abstract boolean isTargetPositionCoordsValid(Position targetPosition);
 }

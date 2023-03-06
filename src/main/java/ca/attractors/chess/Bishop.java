@@ -12,4 +12,9 @@ public class Bishop extends GroundedChessPiece {
         return false;
     }
 
+    @Override
+    protected boolean isTargetPositionCoordsValid(Position targetPosition) {
+        return false;
+    }
+
 }
