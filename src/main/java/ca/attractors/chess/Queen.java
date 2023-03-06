@@ -1,7 +1,5 @@
 package ca.attractors.chess;
 
-import java.util.List;
-
 public class Queen extends GroundedChessPiece {
 
     public Queen(PieceColor color, Board board, Position position) {
@@ -23,11 +21,6 @@ public class Queen extends GroundedChessPiece {
         return getPosition().isHorizontalMove(targetPosition)
                 || getPosition().isVerticalMove(targetPosition)
                 || getPosition().isDiagonalMove(targetPosition);
-    }
-
-    @Override
-    protected List<Position> getPositionsForPath(Position targetPosition) {
-        return null;
     }
 
 }

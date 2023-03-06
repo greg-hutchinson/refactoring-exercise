@@ -8,7 +8,7 @@ public abstract class GroundedChessPiece extends ChessPiece {
     }
 
     protected boolean isPathImpeded(Position targetPosition) {
-        List<Position> positions = getPositionsForPath(targetPosition);
+        List<Position> positions = getPosition().getPositionsForPath(targetPosition);
 
         for (Position position: positions) {
             if (getChessboard().getPieceAt(position) != null) {
@@ -19,5 +19,4 @@ public abstract class GroundedChessPiece extends ChessPiece {
         return false;
     }
 
-    protected abstract List<Position> getPositionsForPath(Position targetPosition);
 }

@@ -1,5 +1,8 @@
 package ca.attractors.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Position {
     A1('a',1), A2('a', 2), A3('a', 3), A4('a', 4), A5('a', 5), A6('a', 6), A7('a', 7), A8('a', 8),
     B1('b',1), B2('b', 2), B3('b', 3), B4('b', 4), B5('b', 5), B6('b', 6), B7('b', 7), B8('b', 8),
@@ -45,5 +48,33 @@ public enum Position {
 
     boolean isDiagonalMove(Position targetPosition) {
         return targetPosition.x != x && targetPosition.y != y;
+    }
+
+    List<Position> getPositionsForPath(Position targetPosition) {
+        // Assume we are moving horizontally by default
+        int start = this.getYOffset();
+        int end = targetPosition.getYOffset();
+
+        // If Y position hasn't changed, then we are moving in the X direction
+        if (this.isHorizontalMove(targetPosition)) {
+            start = this.getXOffset();
+            end = targetPosition.getXOffset();
+        }
+
+        int increment;
+        if (start > end)
+            increment = -1;
+        else
+            increment = 1;
+
+        List<Position> positions = new ArrayList<>();
+        for (int i = start +increment; i != end; i = i + increment) {
+            if (this.isHorizontalMove(targetPosition)) {
+                positions.add(Position.getPositionFor(i, targetPosition.getYOffset()));
+            } else {
+                positions.add(Position.getPositionFor(targetPosition.getXOffset(), i));
+            }
+        }
+        return positions;
     }
 }

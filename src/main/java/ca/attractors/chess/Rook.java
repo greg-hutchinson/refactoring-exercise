@@ -1,8 +1,5 @@
 package ca.attractors.chess;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Rook extends GroundedChessPiece {
     protected Rook(PieceColor color, Board board, Position position) {
         super(color, board, position);
@@ -23,34 +20,6 @@ public class Rook extends GroundedChessPiece {
         if (isPathImpeded(targetPosition)) return false;
 
         return true;
-    }
-
-    protected List<Position> getPositionsForPath(Position targetPosition) {
-        // Assume we are moving horizontally by default
-        int start = getPosition().getYOffset();
-        int end = targetPosition.getYOffset();
-
-        // If Y position hasn't changed, then we are moving in the X direction
-        if (getPosition().isHorizontalMove(targetPosition)) {
-            start = getPosition().getXOffset();
-            end = targetPosition.getXOffset();
-        }
-
-        int increment;
-        if (start > end)
-            increment = -1;
-        else
-            increment = 1;
-
-        List<Position> positions = new ArrayList<>();
-        for (int i = start +increment; i != end; i = i + increment) {
-            if (getPosition().isHorizontalMove(targetPosition)) {
-                positions.add(Position.getPositionFor(i, targetPosition.getYOffset()));
-            } else {
-                positions.add(Position.getPositionFor(targetPosition.getXOffset(), i));
-            }
-        }
-        return positions;
     }
 
     private boolean isTargetPositionCoordsValid(Position targetPosition) {
