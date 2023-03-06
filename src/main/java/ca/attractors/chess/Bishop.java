@@ -1,10 +1,17 @@
 package ca.attractors.chess;
 
-public class Bishop extends ChessPiece {
+import java.util.List;
+
+public class Bishop extends GroundedChessPiece {
 
 
     public Bishop(PieceColor color, Board board, Position position) {
         super(color, board,position);
+    }
+
+    @Override
+    protected List<Position> getPositionsForPath(Position targetPosition) {
+        return null;
     }
 
     @Override

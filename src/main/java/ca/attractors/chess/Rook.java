@@ -3,7 +3,7 @@ package ca.attractors.chess;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends ChessPiece {
+public class Rook extends GroundedChessPiece {
     protected Rook(PieceColor color, Board board, Position position) {
         super(color, board, position);
     }
@@ -25,19 +25,7 @@ public class Rook extends ChessPiece {
         return true;
     }
 
-    private boolean isPathImpeded(Position targetPosition) {
-        List<Position> positions = getPositionsForPath(targetPosition);
-
-        for (Position position: positions) {
-            if (getChessboard().getPieceAt(position) != null) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private List<Position> getPositionsForPath(Position targetPosition) {
+    protected List<Position> getPositionsForPath(Position targetPosition) {
         // Assume we are moving horizontally by default
         int start = getPosition().getYOffset();
         int end = targetPosition.getYOffset();

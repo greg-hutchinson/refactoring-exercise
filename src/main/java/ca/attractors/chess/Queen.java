@@ -1,6 +1,8 @@
 package ca.attractors.chess;
 
-public class Queen extends ChessPiece {
+import java.util.List;
+
+public class Queen extends GroundedChessPiece {
 
     public Queen(PieceColor color, Board board, Position position) {
         super(color, board, position);
@@ -12,7 +14,7 @@ public class Queen extends ChessPiece {
 
         if (isPositionOccupiedBySameColour(targetPosition)) return false;
 
-        // FIXME: Check if path is impeded
+        if (isPathImpeded(targetPosition)) return false;
 
         return true;
     }
@@ -21,6 +23,11 @@ public class Queen extends ChessPiece {
         return getPosition().isHorizontalMove(targetPosition)
                 || getPosition().isVerticalMove(targetPosition)
                 || getPosition().isDiagonalMove(targetPosition);
+    }
+
+    @Override
+    protected List<Position> getPositionsForPath(Position targetPosition) {
+        return null;
     }
 
 }
