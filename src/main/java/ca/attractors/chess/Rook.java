@@ -51,45 +51,65 @@ public class Rook extends ChessPiece {
 
     private boolean isHorizontalPathNotEmpty(Position targetPosition) {
         if (targetPosition.x == getPosition().x) {
-            int start = getPosition().getYOffset();
-            int end = targetPosition.getYOffset();
-            int increment = 0;
-            if (start > end)
-                increment = -1;
+            Rook.movementPath mp = new movementPath();
+            mp.direction = "Horizontal";
+            mp.startPositionOffset = getPosition().getYOffset();
+            mp.targetPositionOffset = targetPosition.getYOffset();
+            mp.movementPathOffset = targetPosition.getXOffset();
+
+            if (mp.startPositionOffset > mp.targetPositionOffset)
+                mp.increment = -1;
             else
-                increment = 1;
-            List<Position> positions = new ArrayList<>();
-            getPositionsInHorizontalMovementPath(targetPosition.getXOffset(), start, end, increment, positions);
-            if (checkMovementPathForOtherPieces(positions)) return true;
+                mp.increment = 1;
+
+            if (isPathNotEmpty(mp)) return true;
         }
         return false;
-    }
-
-    private static void getPositionsInHorizontalMovementPath(int targetPositionOffset, int start, int end, int increment, List<Position> positions) {
-        for (int y = start + increment; y != end; y = y + increment) {
-            positions.add(Position.getPositionFor(targetPositionOffset, y));
-        }
     }
 
     private boolean isVerticalPathNotEmpty(Position targetPosition) {
         if (targetPosition.y == getPosition().y) {
-            int start = getPosition().getXOffset();
-            int end = targetPosition.getXOffset();
-            int increment = 0;
-            if (start > end)
-                increment = -1;
+            Rook.movementPath mp = new movementPath();
+            mp.direction = "Vertical";
+            mp.startPositionOffset = getPosition().getXOffset();
+            mp.targetPositionOffset = targetPosition.getXOffset();
+            mp.movementPathOffset = targetPosition.getYOffset();
+
+            if (mp.startPositionOffset > mp.targetPositionOffset)
+                mp.increment = -1;
             else
-                increment = 1;
-            List<Position> positions = new ArrayList<>();
-            getPositionsInVerticalMovementPath(targetPosition.getYOffset(), start, end, increment, positions);
-            if (checkMovementPathForOtherPieces(positions)) return true;
+                mp.increment = 1;
+
+            if (isPathNotEmpty(mp)) return true;
         }
         return false;
     }
 
-    private static void getPositionsInVerticalMovementPath(int targetPositionOffset, int start, int end, int increment, List<Position> positions) {
-        for (int x = start + increment; x != end; x = x + increment) {
-            positions.add(Position.getPositionFor(x, targetPositionOffset));
+    private boolean isPathNotEmpty(Rook.movementPath mp) {
+
+        List<Position> positions = new ArrayList<>();
+        getPositionsInMovementPath(mp, positions);
+        if (checkMovementPathForOtherPieces(positions)) return true;
+        return false;
+    }
+
+    private static void getPositionsInHorizontalMovementPath(Rook.movementPath mp, List<Position> positions) {
+        for (int p = mp.startPositionOffset + mp.increment; p != mp.targetPositionOffset; p = p + mp.increment) {
+            positions.add(Position.getPositionFor(mp.movementPathOffset, p));
+        }
+    }
+    private static void getPositionsInVerticalMovementPath(Rook.movementPath mp, List<Position> positions) {
+        for (int p = mp.startPositionOffset + mp.increment; p != mp.targetPositionOffset; p = p + mp.increment) {
+            positions.add(Position.getPositionFor(p, mp.movementPathOffset));
+        }
+    }
+
+    private static void getPositionsInMovementPath(Rook.movementPath mp, List<Position> positions) {
+        for (int p = mp.startPositionOffset + mp.increment; p != mp.targetPositionOffset; p = p + mp.increment) {
+            if(mp.direction=="Horizontal")
+                positions.add(Position.getPositionFor(mp.movementPathOffset, p));
+            if(mp.direction=="Vertical")
+                positions.add(Position.getPositionFor(p, mp.movementPathOffset));
         }
     }
 
@@ -106,4 +126,13 @@ public class Rook extends ChessPiece {
         }
         return false;
     }
+
+    class movementPath{
+        String direction;
+        int startPositionOffset;
+        int targetPositionOffset;
+        int movementPathOffset;
+        int increment;
+    }
+
 }
