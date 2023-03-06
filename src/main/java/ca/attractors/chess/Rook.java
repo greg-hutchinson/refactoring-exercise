@@ -22,29 +22,11 @@ public class Rook extends ChessPiece {
         if (isPositionOccupiedBySameColour(targetPosition)) {
             return false;
         }
-        //Next - Get all the cells between the source and the target and ensure that they are empty.
-        // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
-        // the increment might be positive or negative.
-        if (targetPosition.x == getPosition().x) {
-            int start = getPosition().getYOffset();
-            int end = targetPosition.getYOffset();
 
-            if (isHorizontalMovementObstructed(start, end, targetPosition)) {
-                return false;
-            }
+        if (isMovementObstructed(targetPosition)) {
+            return false;
         }
-        //Next - Get all the cells between the source and the target and ensure that they are empty.
-        // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
-        // the increment might be positive or negative.
-        if (targetPosition.y == getPosition().y) {
-            int start = getPosition().getXOffset();
-            int end = targetPosition.getXOffset();
 
-            if (isVerticalMovementObstructed(start, end, targetPosition)) {
-                return false;
-            }
-        }
-        //If we get here - is is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
@@ -85,6 +67,14 @@ public class Rook extends ChessPiece {
         }
 
         return targetPiece.getColor() == getColor();
+    }
+
+    private boolean isMovementObstructed(Position targetPosition) {
+        if (targetPosition.x == getPosition().x) {
+            return isHorizontalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
+        }
+
+        return isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
     }
 
     private boolean isValidMove(Position targetPosition) {
