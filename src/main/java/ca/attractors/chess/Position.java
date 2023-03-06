@@ -1,5 +1,8 @@
 package ca.attractors.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Position {
     A1('a',1), A2('a', 2), A3('a', 3), A4('a', 4), A5('a', 5), A6('a', 6), A7('a', 7), A8('a', 8),
     B1('b',1), B2('b', 2), B3('b', 3), B4('b', 4), B5('b', 5), B6('b', 6), B7('b', 7), B8('b', 8),
@@ -43,4 +46,60 @@ public enum Position {
             increment = 1;
         return increment;
     }
+
+    public boolean isSquareOccupiedBySameColor(Position targetPosition, ChessPiece piece) {
+        ChessPiece targetPiece = piece.getChessboard().getPieceAt(targetPosition);
+        if (targetPiece != null)
+            return targetPiece.getColor() == piece.getColor();
+        return false;
+    }
+
+    public boolean isDiagonalMove(Position targetPosition, ChessPiece piece) {
+        return targetPosition.x != piece.getPosition().x && targetPosition.y != piece.getPosition().y;
+    }
+
+    public boolean isHorizontalMove(Position targetPosition, ChessPiece piece) {
+        return targetPosition.x == piece.getPosition().x;
+    }
+
+    public boolean isVerticalMove(Position targetPosition, ChessPiece piece) {
+        return targetPosition.y == piece.getPosition().y;
+    }
+
+    public boolean isInvalidMove(Position targetPosition, int start, int end, ChessPiece piece) {
+        int increment = targetPosition.getIncrement(start, end);
+        List<Position> positions = new ArrayList<>();
+        if(targetPosition.isHorizontalMove(targetPosition, piece))
+            positions = getHorizontalPositions(targetPosition, start, end, increment);
+        else if(targetPosition.isVerticalMove(targetPosition, piece))
+            positions = getVerticalPositions(targetPosition, start, end, increment);
+        //need to add diagonal functionality block here for queen next
+        for (Position position: positions) {
+            if (isSuccessfulMove(position, piece)) return true;
+        }
+        return false;
+    }
+
+    private static List<Position> getVerticalPositions(Position targetPosition, int start, int end, int increment) {
+        List<Position> positions = new ArrayList<>();
+        for (int x = start + increment; x != end; x = x + increment) {
+            positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
+        }
+        return positions;
+    }
+
+    private static List<Position> getHorizontalPositions(Position targetPosition, int start, int end, int increment) {
+        List<Position> positions = new ArrayList<>();
+        for (int y = start + increment; y != end; y = y + increment) {
+            positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
+        }
+        return positions;
+    }
+
+    private boolean isSuccessfulMove(Position position, ChessPiece piece) {
+        return piece.getChessboard().getPieceAt(position) != null;
+    }
+
+
+
 }
