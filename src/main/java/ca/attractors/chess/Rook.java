@@ -15,11 +15,11 @@ public class Rook extends ChessPiece {
      */
     public boolean moveTo(Position targetPosition) {
 
-        if (!validMove(targetPosition)) {
+        if (!isValidMove(targetPosition)) {
             return false;
         }
 
-        if (positionOccupiedBySameColour(targetPosition)) {
+        if (isPositionOccupiedBySameColour(targetPosition)) {
             return false;
         }
         //Next - Get all the cells between the source and the target and ensure that they are empty.
@@ -28,19 +28,10 @@ public class Rook extends ChessPiece {
         if (targetPosition.x == getPosition().x) {
             int start = getPosition().getYOffset();
             int end = targetPosition.getYOffset();
-            int increment = 0;
-            if (start > end)
-                increment = -1;
-            else
-                increment = 1;
-            List<Position> positions = new ArrayList<>();
-            for (int y = start+increment; y != end; y = y + increment) {
-                positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
-            }
-            for (Position position: positions) {
-                if (getChessboard().getPieceAt(position) != null) {
-                    return false;
-                }
+            int increment = getIncrement(start, end);
+
+            if (isHorizontalMovementObstructed(start, end, increment, targetPosition)) {
+                return false;
             }
         }
         //Next - Get all the cells between the source and the target and ensure that they are empty.
@@ -49,19 +40,10 @@ public class Rook extends ChessPiece {
         if (targetPosition.y == getPosition().y) {
             int start = getPosition().getXOffset();
             int end = targetPosition.getXOffset();
-            int increment = 0;
-            if (start > end)
-                increment = -1;
-            else
-                increment = 1;
-            List<Position> positions = new ArrayList<>();
-            for (int x = start+increment; x != end; x = x + increment) {
-                positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
-            }
-            for (Position position: positions) {
-                if (getChessboard().getPieceAt(position) != null) {
-                    return false;
-                }
+            int increment = getIncrement(start, end);
+
+            if (isVerticalMovementObstructed(start, end, increment, targetPosition)) {
+                return false;
             }
         }
         //If we get here - is is a valid move. Physically move the piece and answer true.
@@ -69,7 +51,35 @@ public class Rook extends ChessPiece {
         return true;
     }
 
-    private boolean positionOccupiedBySameColour(Position targetPosition) {
+    private List<Position> getVerticalPositionsInPath(int start, int end, int increment, Position targetPosition) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int x = start+increment; x != end; x = x + increment) {
+            positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
+        }
+
+        return positions;
+    }
+
+    private List<Position> getHorizontalPositionsInPath(int start, int end, int increment, Position targetPosition) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int y = start+increment; y != end; y = y + increment) {
+            positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
+        }
+
+        return positions;
+    }
+
+    private int getIncrement(int start, int end) {
+        if (start > end) {
+            return -1;
+        }
+
+        return 1;
+    }
+
+    private boolean isPositionOccupiedBySameColour(Position targetPosition) {
         ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
 
         if (targetPiece == null) {
@@ -79,7 +89,19 @@ public class Rook extends ChessPiece {
         return targetPiece.getColor() == getColor();
     }
 
-    private boolean validMove(Position targetPosition) {
+    private boolean isValidMove(Position targetPosition) {
         return targetPosition.x == getPosition().x || targetPosition.y == getPosition().y;
+    }
+
+    private boolean isHorizontalMovementObstructed(int start, int end, int increment, Position targetPosition) {
+        return getHorizontalPositionsInPath(start, end, increment, targetPosition)
+                .stream()
+                .anyMatch(position -> getChessboard().getPieceAt(position) != null);
+    }
+
+    private boolean isVerticalMovementObstructed(int start, int end, int increment, Position targetPosition) {
+        return getVerticalPositionsInPath(start, end, increment, targetPosition)
+                .stream()
+                .anyMatch(position -> getChessboard().getPieceAt(position) != null);
     }
 }
