@@ -22,12 +22,10 @@ public class Rook extends ChessPiece {
 
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
-        // the increment might be positive or negative.
-        if (isHorizontalPathNotEmpty(targetPosition)) return false;
-        //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
         // the increment might be positive or negative.
-        if (isVerticalPathNotEmpty(targetPosition)) return false;
+        if (isPathNotEmpty(targetPosition)) return false;
+
         //If we get here - this is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
@@ -49,43 +47,26 @@ public class Rook extends ChessPiece {
         return false;
     }
 
-    private boolean isHorizontalPathNotEmpty(Position targetPosition) {
-        if (targetPosition.x == getPosition().x) {
-            Rook.movementPath mp = new movementPath();
-            mp.direction = Direction.HORIZONTAL;
-            mp.startPositionOffset = getPosition().getYOffset();
-            mp.targetPositionOffset = targetPosition.getYOffset();
-            mp.movementPathOffset = targetPosition.getXOffset();
-
-            if (mp.startPositionOffset > mp.targetPositionOffset)
-                mp.increment = -1;
-            else
-                mp.increment = 1;
-
-            if (isPathNotEmpty(mp)) return true;
-        }
-        return false;
-    }
-
-    private boolean isVerticalPathNotEmpty(Position targetPosition) {
+    private boolean isPathNotEmpty(Position targetPosition) {
+        Rook.movementPath mp = new movementPath();
         if (targetPosition.y == getPosition().y) {
-            Rook.movementPath mp = new movementPath();
             mp.direction = Direction.VERTICAL;
             mp.startPositionOffset = getPosition().getXOffset();
             mp.targetPositionOffset = targetPosition.getXOffset();
             mp.movementPathOffset = targetPosition.getYOffset();
-
-            if (mp.startPositionOffset > mp.targetPositionOffset)
-                mp.increment = -1;
-            else
-                mp.increment = 1;
-
-            if (isPathNotEmpty(mp)) return true;
         }
-        return false;
-    }
 
-    private boolean isPathNotEmpty(Rook.movementPath mp) {
+        if (targetPosition.x == getPosition().x) {
+            mp.direction = Direction.HORIZONTAL;
+            mp.startPositionOffset = getPosition().getYOffset();
+            mp.targetPositionOffset = targetPosition.getYOffset();
+            mp.movementPathOffset = targetPosition.getXOffset();
+        }
+        if (mp.startPositionOffset > mp.targetPositionOffset)
+            mp.increment = -1;
+        else
+            mp.increment = 1;
+
         List<Position> positions = new ArrayList<>();
         getPositionsInMovementPath(mp, positions);
         if (checkMovementPathForOtherPieces(positions)) return true;
