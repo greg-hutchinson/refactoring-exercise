@@ -15,7 +15,7 @@ public class Rook extends ChessPiece {
      */
     public boolean moveTo(Position targetPosition) {
         //if it is not the same x or y coordinate it is not a rooks valid move at all
-        if (isTargetPositionCoordsInvalid(targetPosition)) return false;
+        if (!isTargetPositionCoordsValid(targetPosition)) return false;
         
         //Next - Check to make sure that if the target square is occupied it is not the same color
         if (isOccupiedBySameColour(targetPosition)) return false;
@@ -44,12 +44,12 @@ public class Rook extends ChessPiece {
     }
 
     private List<Position> getPositionsForPath(Position targetPosition) {
-        // Assume we are moving in Y direction by default
+        // Assume we are moving horizontally by default
         int start = getPosition().getYOffset();
         int end = targetPosition.getYOffset();
 
         // If Y position hasn't changed, then we are moving in the X direction
-        if (targetPosition.y == getPosition().y) {
+        if (getPosition().isHorizontalMove(targetPosition)) {
             start = getPosition().getXOffset();
             end = targetPosition.getXOffset();
         }
@@ -62,7 +62,7 @@ public class Rook extends ChessPiece {
 
         List<Position> positions = new ArrayList<>();
         for (int i = start +increment; i != end; i = i + increment) {
-            if (targetPosition.y == getPosition().y) {
+            if (getPosition().isHorizontalMove(targetPosition)) {
                 positions.add(Position.getPositionFor(i, targetPosition.getYOffset()));
             } else {
                 positions.add(Position.getPositionFor(targetPosition.getXOffset(), i));
@@ -71,8 +71,9 @@ public class Rook extends ChessPiece {
         return positions;
     }
 
-    private boolean isTargetPositionCoordsInvalid(Position targetPosition) {
-        return targetPosition.x != getPosition().x && targetPosition.y != getPosition().y;
+    private boolean isTargetPositionCoordsValid(Position targetPosition) {
+        return getPosition().isHorizontalMove(targetPosition)
+                || getPosition().isVerticalMove(targetPosition);
     }
 
     private boolean isOccupiedBySameColour(Position targetPosition) {
