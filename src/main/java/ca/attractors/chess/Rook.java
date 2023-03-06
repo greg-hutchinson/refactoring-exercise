@@ -23,16 +23,12 @@ public class Rook extends ChessPiece {
             return false;
 
         if (targetPosition.isHorizontalMove(targetPosition, this)) {
-            int start = getPosition().getYOffset();
-            int end = targetPosition.getYOffset();
-            if (targetPosition.isInvalidMove(targetPosition, start, end, this))
+            if (targetPosition.isInvalidMove(targetPosition, this))
                 return false;
         }
 
         if (targetPosition.isVerticalMove(targetPosition, this)) {
-            int start = getPosition().getXOffset();
-            int end = targetPosition.getXOffset();
-            if (targetPosition.isInvalidMove(targetPosition, start, end, this))
+            if (targetPosition.isInvalidMove(targetPosition,this))
                 return false;
         }
         getChessboard().movePieceTo(this, targetPosition);

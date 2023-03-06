@@ -66,21 +66,25 @@ public enum Position {
         return targetPosition.y == piece.getPosition().y;
     }
 
-    public boolean isInvalidMove(Position targetPosition, int start, int end, ChessPiece piece) {
-        int increment = targetPosition.getIncrement(start, end);
+    public boolean isInvalidMove(Position targetPosition, ChessPiece piece) {
         List<Position> positions = new ArrayList<>();
         if(targetPosition.isHorizontalMove(targetPosition, piece))
-            positions = getHorizontalPositions(targetPosition, start, end, increment);
+            positions = getHorizontalPositions(targetPosition, piece);
         else if(targetPosition.isVerticalMove(targetPosition, piece))
-            positions = getVerticalPositions(targetPosition, start, end, increment);
+            positions = getVerticalPositions(targetPosition, piece);
         //need to add diagonal functionality block here for queen next
+//        else if(targetPosition.isDiagonalMove(targetPosition, piece))
+//            positions = getDiagonalPositions();
         for (Position position: positions) {
             if (isSuccessfulMove(position, piece)) return true;
         }
         return false;
     }
 
-    private static List<Position> getVerticalPositions(Position targetPosition, int start, int end, int increment) {
+    private static List<Position> getVerticalPositions(Position targetPosition, ChessPiece piece) {
+        int start = piece.getPosition().getXOffset();
+        int end = targetPosition.getXOffset();
+        int increment = targetPosition.getIncrement(start, end);
         List<Position> positions = new ArrayList<>();
         for (int x = start + increment; x != end; x = x + increment) {
             positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
@@ -88,7 +92,10 @@ public enum Position {
         return positions;
     }
 
-    private static List<Position> getHorizontalPositions(Position targetPosition, int start, int end, int increment) {
+    private static List<Position> getHorizontalPositions(Position targetPosition, ChessPiece piece) {
+        int start = piece.getPosition().getYOffset();
+        int end = targetPosition.getYOffset();
+        int increment = targetPosition.getIncrement(start, end);
         List<Position> positions = new ArrayList<>();
         for (int y = start + increment; y != end; y = y + increment) {
             positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
