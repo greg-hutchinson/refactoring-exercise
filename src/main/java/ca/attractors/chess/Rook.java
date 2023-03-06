@@ -22,13 +22,7 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isPathNotEmpty(Position targetPosition) {
-        List<Position> positions = new ArrayList<>();
-        if (getPosition().isTargetPositionVertical(targetPosition)) {
-        positions = getPosition().getPositionsForVerticalMovementPath(targetPosition);
-    }
-        if (getPosition().isTargetPositionHorizontal(targetPosition)) {
-            positions = getPosition().getPositionsForHorizontalMovementPath(targetPosition);
-        }
+        List<Position> positions = getPosition().getPositionsForMovementPath(targetPosition);
 
         if (getChessboard().checkMovementPathForOtherPieces(positions)) return true;
         return false;

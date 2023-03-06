@@ -23,16 +23,7 @@ public class Queen extends ChessPiece {
     }
 
     private boolean isPathNotEmpty(Position targetPosition) {
-        List<Position> positions = new ArrayList<>();
-        if (getPosition().isTargetPositionVertical(targetPosition)) {
-            positions = getPosition().getPositionsForVerticalMovementPath(targetPosition);
-        }
-        if (getPosition().isTargetPositionHorizontal(targetPosition)) {
-            positions = getPosition().getPositionsForHorizontalMovementPath(targetPosition);
-        }
-        if (getPosition().isTargetPositionDiagonal(targetPosition)) {
-            positions = getPosition().getPositionsForDiagonalMovementPath(targetPosition);
-        }
+        List<Position> positions = getPosition().getPositionsForMovementPath(targetPosition);
 
         if (getChessboard().checkMovementPathForOtherPieces(positions)) return true;
         return false;

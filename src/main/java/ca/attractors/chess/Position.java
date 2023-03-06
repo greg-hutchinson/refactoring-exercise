@@ -82,21 +82,24 @@ public enum Position {
     }
 
     List<Position> getPositionsForDiagonalMovementPath(Position targetPosition) {
-        int xIncrement = 0;
-        if (getXOffset() > targetPosition.getXOffset())
-            xIncrement = -1;
-        else
-            xIncrement = 1;
-
-        int yIncrement = 0;
-        if (getYOffset() > targetPosition.getYOffset())
-            yIncrement = -1;
-        else
-            yIncrement = 1;
+        int xIncrement = Integer.signum(targetPosition.getXOffset() - getXOffset());
+        int yIncrement = Integer.signum(targetPosition.getYOffset() - getYOffset());
 
         List<Position> positions = new ArrayList<>();
         for (int x = getXOffset() + xIncrement, y = getYOffset() + yIncrement;
              x != targetPosition.getXOffset() && y != targetPosition.getYOffset();
+             x += xIncrement, y += yIncrement) {
+            positions.add(Position.getPositionFor(x, y));
+        }
+        return positions;
+    }
+    List<Position> getPositionsForMovementPath(Position targetPosition) {
+        int xIncrement = Integer.signum(targetPosition.getXOffset() - getXOffset());
+        int yIncrement = Integer.signum(targetPosition.getYOffset() - getYOffset());
+
+        List<Position> positions = new ArrayList<>();
+        for (int x = getXOffset() + xIncrement, y = getYOffset() + yIncrement;
+             x != targetPosition.getXOffset() || y != targetPosition.getYOffset();
              x += xIncrement, y += yIncrement) {
             positions.add(Position.getPositionFor(x, y));
         }
