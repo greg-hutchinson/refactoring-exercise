@@ -13,13 +13,8 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    protected boolean isValidMove(Position targetPosition) {
-        return false;
-    }
-
-    @Override
     protected boolean isTargetPositionCoordsValid(Position targetPosition) {
-        return false;
+        return getPosition().isDiagonalMove(targetPosition);
     }
 
 }
