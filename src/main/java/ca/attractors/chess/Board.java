@@ -14,6 +14,15 @@ public class Board {
         pieces[position.getXOffset()][position.getYOffset()] = chessPiece;
     }
 
+    public boolean isSameColorAtTargetPosition(PieceColor pieceColor, Position targetPosition) {
+        ChessPiece targetPiece = getPieceAt(targetPosition);
+        if (targetPiece != null) {
+            if (targetPiece.getColor() == pieceColor)
+                return true;
+        }
+        return false;
+    }
+
     // Code Smells
     void movePieceTo(ChessPiece chessPiece, Position position) {
         putPieceAt(null, chessPiece.getPosition());

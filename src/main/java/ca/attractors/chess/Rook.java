@@ -23,35 +23,26 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isMovementValid(Position targetPosition) {
-        if(!Position.isTargetHorizontalToCurrentPosition(targetPosition, getPosition())&&
-                !Position.isTargetVerticalToCurrentPosition(targetPosition, getPosition())){
+        if(!getPosition().isTargetPositionHorizontal(targetPosition)&&
+                !getPosition().isTargetPositionVertical(targetPosition)){
             return false;
         }
 
-        if (isSameColorAtTargetPosition(targetPosition)) return false;
+        if (getChessboard().isSameColorAtTargetPosition(getColor(),targetPosition)) return false;
         if (isPathNotEmpty(targetPosition)) return false;
 
         return true;
     }
 
-    private boolean isSameColorAtTargetPosition(Position targetPosition) {
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        if (targetPiece != null) {
-            if (targetPiece.getColor() == getColor())
-                return true;
-        }
-        return false;
-    }
-
     private boolean isPathNotEmpty(Position targetPosition) {
         Rook.movementPath mp = new movementPath();
-        if (Position.isTargetVerticalToCurrentPosition(targetPosition, getPosition())) {
+        if (getPosition().isTargetPositionVertical(targetPosition)) {
             mp.direction = Direction.VERTICAL;
             mp.startPositionOffset = getPosition().getXOffset();
             mp.targetPositionOffset = targetPosition.getXOffset();
             mp.movementPathOffset = targetPosition.getYOffset();
         }
-        if (Position.isTargetHorizontalToCurrentPosition(targetPosition, getPosition())) {
+        if (getPosition().isTargetPositionHorizontal(targetPosition)) {
             mp.direction = Direction.HORIZONTAL;
             mp.startPositionOffset = getPosition().getYOffset();
             mp.targetPositionOffset = targetPosition.getYOffset();
