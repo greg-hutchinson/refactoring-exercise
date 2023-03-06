@@ -1,5 +1,7 @@
 package ca.attractors.chess;
 
+import java.util.List;
+
 public abstract class ChessPiece {
     private final Board board;
     private final PieceColor color;
@@ -44,7 +46,31 @@ public abstract class ChessPiece {
         return false;
     }
 
-    protected abstract boolean isValidMove(Position targetPosition);
+    protected abstract boolean isTargetPositionCoordsValid(Position targetPosition);
+
+    protected abstract boolean canBeImpeded();
+
+    protected boolean isPathImpeded(Position targetPosition) {
+        List<Position> positions = getPosition().getPositionsForPath(targetPosition);
+
+        for (Position position: positions) {
+            if (getChessboard().getPieceAt(position) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected boolean isValidMove(Position targetPosition) {
+        if (!isTargetPositionCoordsValid(targetPosition)) return false;
+
+        if (isPositionOccupiedBySameColour(targetPosition)) return false;
+
+        if (canBeImpeded() && isPathImpeded(targetPosition)) return false;
+
+        return true;
+    }
 
     protected boolean isPositionOccupiedBySameColour(Position targetPosition) {
         ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
