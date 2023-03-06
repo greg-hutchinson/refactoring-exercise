@@ -15,23 +15,28 @@ public class Rook extends ChessPiece {
      */
     public boolean moveTo(Position targetPosition) {
 
-        if (!isValidMove(targetPosition)) {
-            return false;
-        }
+       if (isValidMove(targetPosition)) {
+           getChessboard().movePieceTo(this, targetPosition);
+           return true;
+       }
 
-        if (isPositionOccupiedBySameColour(targetPosition)) {
-            return false;
-        }
-
-        if (isMovementObstructed(targetPosition)) {
-            return false;
-        }
-
-        getChessboard().movePieceTo(this, targetPosition);
-        return true;
+       return false;
     }
 
-    private boolean isValidMove(Position targetPosition) {
+    private boolean isValidMove(Position targetPostion) {
+
+        if (!isHorizontalOrVerticalMove(targetPostion)) {
+            return false;
+        }
+
+        if (isPositionOccupiedBySameColour(targetPostion)) {
+            return false;
+        }
+
+       return isMovementPathClear(targetPostion);
+    }
+
+    private boolean isHorizontalOrVerticalMove(Position targetPosition) {
         return targetPosition.x == getPosition().x || targetPosition.y == getPosition().y;
     }
 
@@ -45,17 +50,16 @@ public class Rook extends ChessPiece {
         return targetPiece.getColor() == getColor();
     }
 
-    private boolean isMovementObstructed(Position targetPosition) {
+    private boolean isMovementPathClear(Position targetPosition) {
         if (targetPosition.x == getPosition().x) {
-            return isHorizontalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
+            return !isHorizontalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
         }
-
 
         if (targetPosition.y == getPosition().y) {
-            return isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
+            return !isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
         }
 
-        return false;
+        return true;
     }
 
     private List<Position> getVerticalPositionsInPath(int start, int end, int increment, Position targetPosition) {
