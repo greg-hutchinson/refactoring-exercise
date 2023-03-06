@@ -51,72 +51,17 @@ public enum Position {
                 && Math.abs(targetPosition.x - x) == Math.abs(targetPosition.y - y);
     }
 
-    List<Position> getPositionsForDiagonalPath(Position targetPosition) {
-        int startX = this.getXOffset();
-        int endX = targetPosition.getXOffset();
-        int startY = this.getYOffset();
-        int endY = targetPosition.getYOffset();
-
-        int incrementX;
-        if (startX == endX)
-            incrementX = 0;
-        else if (startX > endX)
-            incrementX = -1;
-        else
-            incrementX = 1;
-
-        int incrementY;
-        if (startY == endY)
-            incrementY = 0;
-        else if (startY > endY)
-            incrementY = -1;
-        else
-            incrementY = 1;
+    List<Position> getPositionsForPath(Position targetPosition) {
+        int incrementX = Integer.signum(targetPosition.getXOffset() - getXOffset());
+        int incrementY = Integer.signum(targetPosition.getYOffset() - getYOffset());
 
         List<Position> positions = new ArrayList<>();
-        for (int x = startX + incrementX; x != endX; x = x + incrementX) {
-            for (int y = startY + incrementY; y != endY; y = y + incrementY) {
-                positions.add(Position.getPositionFor(x, y));
-            }
+        int x = this.getXOffset() + incrementX;
+        for (int y = this.getYOffset() + incrementY;
+             x != targetPosition.getXOffset() || y != targetPosition.getYOffset();
+             x = x + incrementX, y = y + incrementY) {
+            positions.add(Position.getPositionFor(x, y));
         }
         return positions;
-    }
-
-    List<Position> getPositionsForStraightPath(Position targetPosition) {
-        // Assume we are moving horizontally by default
-        int start = this.getYOffset();
-        int end = targetPosition.getYOffset();
-
-        // If Y position hasn't changed, then we are moving in the X direction
-        if (this.isHorizontalMove(targetPosition)) {
-            start = this.getXOffset();
-            end = targetPosition.getXOffset();
-        }
-
-        int increment;
-        if (start > end)
-            increment = -1;
-        else
-            increment = 1;
-
-        List<Position> positions = new ArrayList<>();
-        for (int i = start +increment; i != end; i = i + increment) {
-            if (this.isHorizontalMove(targetPosition)) {
-                positions.add(Position.getPositionFor(i, targetPosition.getYOffset()));
-            } else {
-                positions.add(Position.getPositionFor(targetPosition.getXOffset(), i));
-            }
-        }
-        return positions;
-    }
-
-    public List<Position> getPositionsForPath(Position targetPosition) {
-        if (this.isVerticalMove(targetPosition) || this.isHorizontalMove(targetPosition)) {
-            return getPositionsForStraightPath(targetPosition);
-        }
-        if (this.isDiagonalMove(targetPosition)) {
-            return getPositionsForDiagonalPath(targetPosition);
-        }
-        throw new IllegalArgumentException("Unable to determine the direction of the move.");
     }
 }
