@@ -28,9 +28,8 @@ public class Rook extends ChessPiece {
         if (targetPosition.x == getPosition().x) {
             int start = getPosition().getYOffset();
             int end = targetPosition.getYOffset();
-            int increment = getIncrement(start, end);
 
-            if (isHorizontalMovementObstructed(start, end, increment, targetPosition)) {
+            if (isHorizontalMovementObstructed(start, end, targetPosition)) {
                 return false;
             }
         }
@@ -40,9 +39,8 @@ public class Rook extends ChessPiece {
         if (targetPosition.y == getPosition().y) {
             int start = getPosition().getXOffset();
             int end = targetPosition.getXOffset();
-            int increment = getIncrement(start, end);
 
-            if (isVerticalMovementObstructed(start, end, increment, targetPosition)) {
+            if (isVerticalMovementObstructed(start, end, targetPosition)) {
                 return false;
             }
         }
@@ -93,14 +91,14 @@ public class Rook extends ChessPiece {
         return targetPosition.x == getPosition().x || targetPosition.y == getPosition().y;
     }
 
-    private boolean isHorizontalMovementObstructed(int start, int end, int increment, Position targetPosition) {
-        return getHorizontalPositionsInPath(start, end, increment, targetPosition)
+    private boolean isHorizontalMovementObstructed(int start, int end, Position targetPosition) {
+        return getHorizontalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
                 .stream()
                 .anyMatch(position -> getChessboard().getPieceAt(position) != null);
     }
 
-    private boolean isVerticalMovementObstructed(int start, int end, int increment, Position targetPosition) {
-        return getVerticalPositionsInPath(start, end, increment, targetPosition)
+    private boolean isVerticalMovementObstructed(int start, int end, Position targetPosition) {
+        return getVerticalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
                 .stream()
                 .anyMatch(position -> getChessboard().getPieceAt(position) != null);
     }
