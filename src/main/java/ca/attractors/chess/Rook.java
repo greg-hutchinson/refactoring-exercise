@@ -32,6 +32,18 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isPathImpeded(Position targetPosition) {
+        List<Position> positions = getPositionsForPath(targetPosition);
+
+        for (Position position: positions) {
+            if (getChessboard().getPieceAt(position) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private List<Position> getPositionsForPath(Position targetPosition) {
         // Assume we are moving in Y direction by default
         int start = getPosition().getYOffset();
         int end = targetPosition.getYOffset();
@@ -42,22 +54,21 @@ public class Rook extends ChessPiece {
             end = targetPosition.getXOffset();
         }
 
-        int increment = 0;
+        int increment;
         if (start > end)
             increment = -1;
         else
             increment = 1;
+
         List<Position> positions = new ArrayList<>();
-        for (int y = start+increment; y != end; y = y + increment) {
-            positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
-        }
-        for (Position position: positions) {
-            if (getChessboard().getPieceAt(position) != null) {
-                return false;
+        for (int i = start +increment; i != end; i = i + increment) {
+            if (targetPosition.y == getPosition().y) {
+                positions.add(Position.getPositionFor(i, targetPosition.getYOffset()));
+            } else {
+                positions.add(Position.getPositionFor(targetPosition.getXOffset(), i));
             }
         }
-
-        return true;
+        return positions;
     }
 
     private boolean isTargetPositionCoordsInvalid(Position targetPosition) {
