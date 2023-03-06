@@ -31,6 +31,32 @@ public class Rook extends ChessPiece {
         return true;
     }
 
+    private boolean isValidMove(Position targetPosition) {
+        return targetPosition.x == getPosition().x || targetPosition.y == getPosition().y;
+    }
+
+    private boolean isPositionOccupiedBySameColour(Position targetPosition) {
+        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
+
+        if (targetPiece == null) {
+            return false;
+        }
+
+        return targetPiece.getColor() == getColor();
+    }
+
+    private boolean isMovementObstructed(Position targetPosition) {
+        if (targetPosition.x == getPosition().x) {
+            return isHorizontalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
+        }
+
+        if (targetPosition.y != getPosition().y) {
+            return false;
+        }
+
+        return isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
+    }
+
     private List<Position> getVerticalPositionsInPath(int start, int end, int increment, Position targetPosition) {
         List<Position> positions = new ArrayList<>();
 
@@ -57,28 +83,6 @@ public class Rook extends ChessPiece {
         }
 
         return 1;
-    }
-
-    private boolean isPositionOccupiedBySameColour(Position targetPosition) {
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-
-        if (targetPiece == null) {
-            return false;
-        }
-
-        return targetPiece.getColor() == getColor();
-    }
-
-    private boolean isMovementObstructed(Position targetPosition) {
-        if (targetPosition.x == getPosition().x) {
-            return isHorizontalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
-        }
-
-        return isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
-    }
-
-    private boolean isValidMove(Position targetPosition) {
-        return targetPosition.x == getPosition().x || targetPosition.y == getPosition().y;
     }
 
     private boolean isHorizontalMovementObstructed(int start, int end, Position targetPosition) {
