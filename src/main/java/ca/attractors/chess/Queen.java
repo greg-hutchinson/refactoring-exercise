@@ -8,7 +8,19 @@ public class Queen extends ChessPiece {
 
     @Override
     protected boolean isValidMove(Position targetPosition) {
-        return false;
+        if (!isTargetPositionCoordsValid(targetPosition)) return false;
+
+        if (isPositionOccupiedBySameColour(targetPosition)) return false;
+
+        // FIXME: Check if path is impeded
+
+        return true;
+    }
+
+    private boolean isTargetPositionCoordsValid(Position targetPosition) {
+        return getPosition().isHorizontalMove(targetPosition)
+                || getPosition().isVerticalMove(targetPosition)
+                || getPosition().isDiagonalMove(targetPosition);
     }
 
 }

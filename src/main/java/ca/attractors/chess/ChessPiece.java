@@ -45,4 +45,13 @@ public abstract class ChessPiece {
     }
 
     protected abstract boolean isValidMove(Position targetPosition);
+
+    protected boolean isPositionOccupiedBySameColour(Position targetPosition) {
+        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
+        if (targetPiece != null) {
+            if (targetPiece.getColor() == getColor())
+                return true;
+        }
+        return false;
+    }
 }
