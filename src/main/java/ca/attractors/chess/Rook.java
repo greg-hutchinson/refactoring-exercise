@@ -15,9 +15,8 @@ public class Rook extends ChessPiece {
      */
     public boolean moveTo(Position targetPosition) {
         //if it is not the same x or y coordinate it is not a rooks valid move at all
-        if (targetPosition.x != getPosition().x && targetPosition.y != getPosition().y) {
-            return false;
-        }
+        if (isTargetPositionCoordsInvalid(targetPosition)) return false;
+
         //Next - Check to make sure that if the target square is occupied it is not the same color
         if (isOccupiedBySameColour(targetPosition)) return false;
 
@@ -66,6 +65,10 @@ public class Rook extends ChessPiece {
         //If we get here - is is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
+    }
+
+    private boolean isTargetPositionCoordsInvalid(Position targetPosition) {
+        return targetPosition.x != getPosition().x && targetPosition.y != getPosition().y;
     }
 
     private boolean isOccupiedBySameColour(Position targetPosition) {
