@@ -15,6 +15,22 @@ public class Queen extends ChessPiece {
     }
 
     private boolean isValidMove(Position targetPosition) {
+        if (!getPosition().isHorizontalMove(targetPosition) && !getPosition().isVerticalMove(targetPosition) && !getPosition().isVerticalMove(targetPosition)) {
+            return false;
+        }
+
+        if (getChessboard().isPositionOccupiedBySameColour(targetPosition, this.getColor())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isMovementPathClear(Position targetPosition) {
+        if (getPosition().isVerticalMove(targetPosition)) {
+            return true;
+        }
+
         return true;
     }
 }

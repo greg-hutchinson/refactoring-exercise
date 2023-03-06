@@ -1,5 +1,8 @@
 package ca.attractors.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private ChessPiece[][] pieces = new ChessPiece[8][8];
 
@@ -35,5 +38,45 @@ public class Board {
         }
 
         return targetPiece.getColor() == color;
+    }
+
+    public boolean isVerticalMovementObstructed(int start, int end, Position targetPosition) {
+        return getHorizontalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
+                .stream()
+                .anyMatch(position -> this.getPieceAt(position) != null);
+    }
+
+    public boolean isHorizontalMovementObstructed(int start, int end, Position targetPosition) {
+        return getVerticalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
+                .stream()
+                .anyMatch(position -> this.getPieceAt(position) != null);
+    }
+
+    private List<Position> getHorizontalPositionsInPath(int start, int end, int increment, Position targetPosition) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int y = start+increment; y != end; y = y + increment) {
+            positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
+        }
+
+        return positions;
+    }
+
+    private List<Position> getVerticalPositionsInPath(int start, int end, int increment, Position targetPosition) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int x = start+increment; x != end; x = x + increment) {
+            positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
+        }
+
+        return positions;
+    }
+
+    private int getIncrement(int start, int end) {
+        if (start > end) {
+            return -1;
+        }
+
+        return 1;
     }
 }

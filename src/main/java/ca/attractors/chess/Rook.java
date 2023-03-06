@@ -24,7 +24,7 @@ public class Rook extends ChessPiece {
 
     private boolean isValidMove(Position targetPosition) {
 
-        if (!isHorizontalMove(targetPosition) && !isVerticalMove(targetPosition)) {
+        if (!getPosition().isHorizontalMove(targetPosition) && !getPosition().isVerticalMove(targetPosition)) {
             return false;
         }
 
@@ -35,63 +35,15 @@ public class Rook extends ChessPiece {
        return isMovementPathClear(targetPosition);
     }
 
-    private boolean isHorizontalMove(Position targetPosition) {
-        return getPosition().isHorizontalMove(targetPosition);
-    }
-
-    private boolean isVerticalMove(Position targetPosition) {
-        return getPosition().isVerticalMove(targetPosition);
-    }
-
     private boolean isMovementPathClear(Position targetPosition) {
-        if (isVerticalMove(targetPosition)) {
-            return !isVerticalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
+        if (getPosition().isVerticalMove(targetPosition)) {
+            return !getChessboard().isVerticalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
         }
 
-        if (isHorizontalMove(targetPosition)) {
-            return !isHorizontalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
+        if (getPosition().isHorizontalMove(targetPosition)) {
+            return !getChessboard().isHorizontalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
         }
 
         return true;
-    }
-
-    private List<Position> getVerticalPositionsInPath(int start, int end, int increment, Position targetPosition) {
-        List<Position> positions = new ArrayList<>();
-
-        for (int x = start+increment; x != end; x = x + increment) {
-            positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
-        }
-
-        return positions;
-    }
-
-    private List<Position> getHorizontalPositionsInPath(int start, int end, int increment, Position targetPosition) {
-        List<Position> positions = new ArrayList<>();
-
-        for (int y = start+increment; y != end; y = y + increment) {
-            positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
-        }
-
-        return positions;
-    }
-
-    private int getIncrement(int start, int end) {
-        if (start > end) {
-            return -1;
-        }
-
-        return 1;
-    }
-
-    private boolean isVerticalMovementObstructed(int start, int end, Position targetPosition) {
-        return getHorizontalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
-                .stream()
-                .anyMatch(position -> getChessboard().getPieceAt(position) != null);
-    }
-
-    private boolean isHorizontalMovementObstructed(int start, int end, Position targetPosition) {
-        return getVerticalPositionsInPath(start, end, getIncrement(start, end), targetPosition)
-                .stream()
-                .anyMatch(position -> getChessboard().getPieceAt(position) != null);
     }
 }
