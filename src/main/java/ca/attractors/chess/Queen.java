@@ -5,7 +5,30 @@ public class Queen extends ChessPiece {
         super(color, board, position);
     }
 
-//    public boolean moveTo() {
-//        //will have same functionality as rook for horizontal/vertical movement - how to implement this?
-//    }
+    public boolean moveTo(Position targetPosition) {
+        if (targetPosition.isSquareOccupiedBySameColor(targetPosition, this))
+            return false;
+
+        if (targetPosition.isHorizontalMove(targetPosition, this)) {
+            int start = getPosition().getYOffset();
+            int end = targetPosition.getYOffset();
+            if (targetPosition.isInvalidMove(targetPosition, start, end, this))
+                return false;
+        }
+
+        if (targetPosition.isVerticalMove(targetPosition, this)) {
+            int start = getPosition().getXOffset();
+            int end = targetPosition.getXOffset();
+            if (targetPosition.isInvalidMove(targetPosition, start, end, this))
+                return false;
+        }
+
+        if (targetPosition.isDiagonalMove(targetPosition, this)) {
+            //diagonal logic here
+            return false;
+        }
+
+        getChessboard().movePieceTo(this, targetPosition);
+        return true;
+    }
 }
