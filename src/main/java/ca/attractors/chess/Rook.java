@@ -34,7 +34,7 @@ public class Rook extends ChessPiece {
         if (targetPosition.y == getPosition().y) {
             if (isInvalidVerticalMove(targetPosition)) return false;
         }
-        //If we get here - is is a valid move. Physically move the piece and answer true.
+        //If we get here - it is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
     }
@@ -52,9 +52,7 @@ public class Rook extends ChessPiece {
             positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
         }
         for (Position position: positions) {
-            if (getChessboard().getPieceAt(position) != null) {
-                return true;
-            }
+            if (isSuccessfulMove(position)) return true;
         }
         return false;
     }
@@ -72,13 +70,17 @@ public class Rook extends ChessPiece {
             positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
         }
         for (Position position: positions) {
-            if (getChessboard().getPieceAt(position) != null) {
-                return true;
-            }
+            if (isSuccessfulMove(position)) return true;
         }
         return false;
     }
 
+    private boolean isSuccessfulMove(Position position) {
+        if (getChessboard().getPieceAt(position) != null) {
+            return true;
+        }
+        return false;
+    }
 
     private boolean isSquareOccupiedBySameColor(Position targetPosition) {
         ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
@@ -86,5 +88,5 @@ public class Rook extends ChessPiece {
             return targetPiece.getColor() == getColor();
         return false;
     }
-
+    
 }
