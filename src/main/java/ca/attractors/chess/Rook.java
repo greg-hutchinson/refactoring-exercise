@@ -19,11 +19,8 @@ public class Rook extends ChessPiece {
             return false;
         }
         //Next - Check to make sure that if the target square is occupied it is not the same color
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-        if (targetPiece != null) {
-            if (targetPiece.getColor() == getColor())
-                return false;
-        }
+        if (isOccupiedBySameColour(targetPosition)) return false;
+
         //Next - Get all the cells between the source and the target and ensure that they are empty.
         // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
         // the increment might be positive or negative.
@@ -69,6 +66,15 @@ public class Rook extends ChessPiece {
         //If we get here - is is a valid move. Physically move the piece and answer true.
         getChessboard().movePieceTo(this, targetPosition);
         return true;
+    }
+
+    private boolean isOccupiedBySameColour(Position targetPosition) {
+        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
+        if (targetPiece != null) {
+            if (targetPiece.getColor() == getColor())
+                return true;
+        }
+        return false;
     }
 
 }
