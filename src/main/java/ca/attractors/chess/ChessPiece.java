@@ -1,5 +1,7 @@
 package ca.attractors.chess;
 
+import java.util.List;
+
 public abstract class ChessPiece {
     private final Board board;
     private final PieceColor color;
@@ -45,4 +47,11 @@ public abstract class ChessPiece {
     }
 
     protected abstract boolean isMovementValid(Position targetPosition);
+
+    public boolean isPathNotEmpty(Position targetPosition) {
+        List<Position> positions = getPosition().getPositionsForMovementPath(targetPosition);
+
+        if (getChessboard().checkMovementPathForOtherPieces(positions)) return true;
+        return false;
+    }
 }

@@ -55,44 +55,6 @@ public enum Position {
         return false;
     }
 
-    List<Position> getPositionsForHorizontalMovementPath(Position targetPosition) {
-        int increment = 0;
-        if (getYOffset() > targetPosition.getYOffset())
-            increment = -1;
-        else
-            increment = 1;
-        List<Position> positions = new ArrayList<>();
-        for (int y = getYOffset() + increment; y < targetPosition.getYOffset(); y = y + increment) {
-            positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
-        }
-        return positions;
-    }
-
-    List<Position> getPositionsForVerticalMovementPath(Position targetPosition) {
-        int increment = 0;
-        if (getXOffset() > targetPosition.getXOffset())
-            increment = -1;
-        else
-            increment = 1;
-        List<Position> positions = new ArrayList<>();
-        for (int x = getXOffset() + increment; x < targetPosition.getXOffset(); x = x + increment) {
-            positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
-        }
-        return positions;
-    }
-
-    List<Position> getPositionsForDiagonalMovementPath(Position targetPosition) {
-        int xIncrement = Integer.signum(targetPosition.getXOffset() - getXOffset());
-        int yIncrement = Integer.signum(targetPosition.getYOffset() - getYOffset());
-
-        List<Position> positions = new ArrayList<>();
-        for (int x = getXOffset() + xIncrement, y = getYOffset() + yIncrement;
-             x != targetPosition.getXOffset() && y != targetPosition.getYOffset();
-             x += xIncrement, y += yIncrement) {
-            positions.add(Position.getPositionFor(x, y));
-        }
-        return positions;
-    }
     List<Position> getPositionsForMovementPath(Position targetPosition) {
         int xIncrement = Integer.signum(targetPosition.getXOffset() - getXOffset());
         int yIncrement = Integer.signum(targetPosition.getYOffset() - getYOffset());

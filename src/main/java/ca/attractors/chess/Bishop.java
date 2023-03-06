@@ -1,7 +1,5 @@
 package ca.attractors.chess;
 
-import java.util.List;
-
 public class Bishop extends ChessPiece {
 
 
@@ -19,12 +17,5 @@ public class Bishop extends ChessPiece {
         if (isPathNotEmpty(targetPosition)) return false;
 
         return true;
-    }
-
-    private boolean isPathNotEmpty(Position targetPosition) {
-        List<Position> positions = getPosition().getPositionsForDiagonalMovementPath(targetPosition);
-
-        if (getChessboard().checkMovementPathForOtherPieces(positions)) return true;
-        return false;
     }
 }

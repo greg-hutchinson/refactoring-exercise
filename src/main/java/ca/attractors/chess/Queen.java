@@ -21,11 +21,4 @@ public class Queen extends ChessPiece {
 
         return true;
     }
-
-    private boolean isPathNotEmpty(Position targetPosition) {
-        List<Position> positions = getPosition().getPositionsForMovementPath(targetPosition);
-
-        if (getChessboard().checkMovementPathForOtherPieces(positions)) return true;
-        return false;
-    }
 }
