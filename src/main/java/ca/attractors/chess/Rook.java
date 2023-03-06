@@ -22,40 +22,33 @@ public class Rook extends ChessPiece {
        return false;
     }
 
-    private boolean isValidMove(Position targetPostion) {
+    private boolean isValidMove(Position targetPosition) {
 
-        if (!isHorizontalOrVerticalMove(targetPostion)) {
+        if (!isHorizontalMove(targetPosition) && !isVerticalMove(targetPosition)) {
             return false;
         }
 
-        if (isPositionOccupiedBySameColour(targetPostion)) {
+        if (getChessboard().isPositionOccupiedBySameColour(targetPosition, this.getColor())) {
             return false;
         }
 
-       return isMovementPathClear(targetPostion);
+       return isMovementPathClear(targetPosition);
     }
 
-    private boolean isHorizontalOrVerticalMove(Position targetPosition) {
-        return Position.isHorizontalMove(getPosition(), targetPosition)
-                || Position.isVerticalMove(getPosition(), targetPosition);
+    private boolean isHorizontalMove(Position targetPosition) {
+        return getPosition().isHorizontalMove(targetPosition);
     }
 
-    private boolean isPositionOccupiedBySameColour(Position targetPosition) {
-        ChessPiece targetPiece = getChessboard().getPieceAt(targetPosition);
-
-        if (targetPiece == null) {
-            return false;
-        }
-
-        return targetPiece.getColor() == getColor();
+    private boolean isVerticalMove(Position targetPosition) {
+        return getPosition().isVerticalMove(targetPosition);
     }
 
     private boolean isMovementPathClear(Position targetPosition) {
-        if (Position.isVerticalMove(getPosition(), targetPosition)) {
+        if (isVerticalMove(targetPosition)) {
             return !isVerticalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
         }
 
-        if (Position.isHorizontalMove(getPosition(), targetPosition)) {
+        if (isHorizontalMove(targetPosition)) {
             return !isHorizontalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
         }
 

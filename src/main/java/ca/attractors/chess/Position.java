@@ -35,15 +35,15 @@ public enum Position {
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
     }
 
-    static boolean isVerticalMove(Position currentPosition, Position targetPosition) {
-        return currentPosition.x == targetPosition.x;
+    public boolean isVerticalMove(Position targetPosition) {
+        return this.x == targetPosition.x;
     }
 
-    static boolean isHorizontalMove(Position currentPosition, Position targetPosition) {
-        return currentPosition.y == targetPosition.y;
+    public boolean isHorizontalMove(Position targetPosition) {
+        return this.y == targetPosition.y;
     }
 
-    static boolean isDiagonalMove(Position currentPosition, Position targetPosition) {
-        return currentPosition.y != targetPosition.y && currentPosition.x != currentPosition.y;
+    public boolean isDiagonalMove(Position targetPosition) {
+        return this.y != targetPosition.y && this.x != this.y;
     }
 }

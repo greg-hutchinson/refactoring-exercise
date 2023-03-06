@@ -26,4 +26,14 @@ public class Board {
                 return position;
         return null;
     }
+
+    public boolean isPositionOccupiedBySameColour(Position targetPosition, PieceColor color) {
+        ChessPiece targetPiece = this.getPieceAt(targetPosition);
+
+        if (targetPiece == null) {
+            return false;
+        }
+
+        return targetPiece.getColor() == color;
+    }
 }
