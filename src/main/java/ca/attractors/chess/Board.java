@@ -26,4 +26,14 @@ public class Board {
                 return position;
         return null;
     }
+
+    public boolean isOccupiedTargetPieceColorDifferent(Position targetPosition, PieceColor color) {
+        ChessPiece targetPiece = this.getPieceAt(targetPosition);
+        if (targetPiece != null) {
+            if (targetPiece.getColor() == color)
+                return true;
+        }
+        return false;
+    }
+
 }
