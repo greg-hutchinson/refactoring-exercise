@@ -18,7 +18,10 @@ public class Queen extends ChessPiece {
 
     public boolean isMoveValid(Position targetPosition){
 
-        if (getChessboard().isOccupiedTargetPieceColorDifferent(targetPosition, this.getColor())) return false;
+        if (!getPosition().isMoveVertical(targetPosition) && !getPosition().isMoveHorizontal(targetPosition) &&
+                !getPosition().isNotHorizontalOrVertical(targetPosition, getPosition())) return false;
+
+        if (getChessboard().isOccupiedTargetPieceColorDifferent(targetPosition, getColor())) return false;
 
 
 

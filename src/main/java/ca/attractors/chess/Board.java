@@ -1,5 +1,8 @@
 package ca.attractors.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private ChessPiece[][] pieces = new ChessPiece[8][8];
 
@@ -31,9 +34,9 @@ public class Board {
         ChessPiece targetPiece = this.getPieceAt(targetPosition);
         if (targetPiece != null) {
             if (targetPiece.getColor() == color)
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
 }

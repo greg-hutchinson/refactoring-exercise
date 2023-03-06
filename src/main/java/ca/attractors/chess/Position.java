@@ -43,7 +43,7 @@ public enum Position {
         return this.y == targetPosition.y;
     }
 
-    static boolean isNotHorizontalOrVertical(Position targetPosition, Position currentPosition) {
+    boolean isNotHorizontalOrVertical(Position targetPosition, Position currentPosition) {
         return targetPosition.x != currentPosition.x && targetPosition.y != currentPosition.y;
     }
 
