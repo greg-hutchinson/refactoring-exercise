@@ -34,4 +34,25 @@ public enum Position {
         }
         throw new IllegalArgumentException("There is no position with these offsets " + xOffset + ":" + yOffset);
     }
+
+    static boolean isTargetHorizontalToCurrentPosition (Position targetPosition, Position currentPosition) {
+        if(currentPosition.getXOffset() == targetPosition.getXOffset())
+            return true;
+        return false;
+    }
+
+    static boolean isTargetVerticalToCurrentPosition (Position targetPosition, Position currentPosition) {
+        if(currentPosition.getYOffset() == targetPosition.getYOffset())
+            return true;
+        return false;
+    }
+
+    static boolean isTargetDiagonalToCurrentPosition (Position targetPosition, Position currentPosition) {
+        int xOffsetOfMove = currentPosition.getXOffset() - targetPosition.getXOffset();
+        int yOffsetOfMove = currentPosition.getYOffset() - targetPosition.getYOffset();
+        if(Math.abs(xOffsetOfMove) == Math.abs(yOffsetOfMove)){
+            return true;
+        }
+        return false;
+    }
 }

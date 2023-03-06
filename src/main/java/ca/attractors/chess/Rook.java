@@ -14,28 +14,24 @@ public class Rook extends ChessPiece {
      * @return true if we were able to complete the move. false otherwise
      */
     public boolean moveTo(Position targetPosition) {
-        //if it is not the same x or y coordinate it is not a rooks valid move at all
-        if (isMovementInvalid(targetPosition)) return false;
-
-        //Next - Check to make sure that if the target square is occupied it is not the same color
-        if (isSameColorAtTargetPosition(targetPosition)) return false;
-
-        //Next - Get all the cells between the source and the target and ensure that they are empty.
-        // if this is a horizontal move we need to increment the y coordinate until it is the same as the target's y
-        // if this is a vertical move we need to increment the x coordinate until it is the same as the target's x
-        // the increment might be positive or negative.
-        if (isPathNotEmpty(targetPosition)) return false;
-
-        //If we get here - this is a valid move. Physically move the piece and answer true.
-        getChessboard().movePieceTo(this, targetPosition);
-        return true;
-    }
-
-    private boolean isMovementInvalid(Position targetPosition) {
-        if (targetPosition.x != getPosition().x && targetPosition.y != getPosition().y) {
+        if (isMovementValid(targetPosition)) {
+            getChessboard().movePieceTo(this, targetPosition);
             return true;
         }
+
         return false;
+    }
+
+    private boolean isMovementValid(Position targetPosition) {
+        if(!Position.isTargetHorizontalToCurrentPosition(targetPosition, getPosition())&&
+                !Position.isTargetVerticalToCurrentPosition(targetPosition, getPosition())){
+            return false;
+        }
+
+        if (isSameColorAtTargetPosition(targetPosition)) return false;
+        if (isPathNotEmpty(targetPosition)) return false;
+
+        return true;
     }
 
     private boolean isSameColorAtTargetPosition(Position targetPosition) {
@@ -49,13 +45,13 @@ public class Rook extends ChessPiece {
 
     private boolean isPathNotEmpty(Position targetPosition) {
         Rook.movementPath mp = new movementPath();
-        if (targetPosition.y == getPosition().y) {
+        if (Position.isTargetVerticalToCurrentPosition(targetPosition, getPosition())) {
             mp.direction = Direction.VERTICAL;
             mp.startPositionOffset = getPosition().getXOffset();
             mp.targetPositionOffset = targetPosition.getXOffset();
             mp.movementPathOffset = targetPosition.getYOffset();
         }
-        if (targetPosition.x == getPosition().x) {
+        if (Position.isTargetHorizontalToCurrentPosition(targetPosition, getPosition())) {
             mp.direction = Direction.HORIZONTAL;
             mp.startPositionOffset = getPosition().getYOffset();
             mp.targetPositionOffset = targetPosition.getYOffset();
