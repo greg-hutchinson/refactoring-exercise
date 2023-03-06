@@ -55,7 +55,6 @@ public class Rook extends ChessPiece {
             mp.targetPositionOffset = targetPosition.getXOffset();
             mp.movementPathOffset = targetPosition.getYOffset();
         }
-
         if (targetPosition.x == getPosition().x) {
             mp.direction = Direction.HORIZONTAL;
             mp.startPositionOffset = getPosition().getYOffset();
@@ -77,9 +76,9 @@ public class Rook extends ChessPiece {
         for (int p = mp.startPositionOffset + mp.increment; p != mp.targetPositionOffset; p = p + mp.increment) {
             if(mp.direction==Direction.HORIZONTAL)
                 positions.add(Position.getPositionFor(mp.movementPathOffset, p));
-            if(mp.direction==Direction.VERTICAL)
+            else if(mp.direction==Direction.VERTICAL)
                 positions.add(Position.getPositionFor(p, mp.movementPathOffset));
-            else{return;}
+            else return;
         }
     }
 
