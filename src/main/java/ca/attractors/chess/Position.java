@@ -1,5 +1,8 @@
 package ca.attractors.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Position {
     A1('a',1), A2('a', 2), A3('a', 3), A4('a', 4), A5('a', 5), A6('a', 6), A7('a', 7), A8('a', 8),
     B1('b',1), B2('b', 2), B3('b', 3), B4('b', 4), B5('b', 5), B6('b', 6), B7('b', 7), B8('b', 8),
@@ -50,5 +53,31 @@ public enum Position {
             return true;
         }
         return false;
+    }
+
+    List<Position> getPositionsForHorizontalMovementPath(Position targetPosition) {
+        int increment = 0;
+        if (getYOffset() > targetPosition.getYOffset())
+            increment = -1;
+        else
+            increment = 1;
+        List<Position> positions = new ArrayList<>();
+        for (int y = getYOffset() + increment; y < targetPosition.getYOffset(); y = y + increment) {
+            positions.add(Position.getPositionFor(targetPosition.getXOffset(), y));
+        }
+        return positions;
+    }
+
+    List<Position> getPositionsForVerticalMovementPath(Position targetPosition) {
+        int increment = 0;
+        if (getXOffset() > targetPosition.getXOffset())
+            increment = -1;
+        else
+            increment = 1;
+        List<Position> positions = new ArrayList<>();
+        for (int x = getXOffset() + increment; x < targetPosition.getXOffset(); x = x + increment) {
+            positions.add(Position.getPositionFor(x, targetPosition.getYOffset()));
+        }
+        return positions;
     }
 }

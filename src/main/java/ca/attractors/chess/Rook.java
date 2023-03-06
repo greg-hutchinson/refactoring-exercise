@@ -35,38 +35,16 @@ public class Rook extends ChessPiece {
     }
 
     private boolean isPathNotEmpty(Position targetPosition) {
-        Rook.movementPath mp = new movementPath();
+        List<Position> positions = new ArrayList<>();
         if (getPosition().isTargetPositionVertical(targetPosition)) {
-            mp.direction = Direction.VERTICAL;
-            mp.startPositionOffset = getPosition().getXOffset();
-            mp.targetPositionOffset = targetPosition.getXOffset();
-            mp.movementPathOffset = targetPosition.getYOffset();
+            positions = getPosition().getPositionsForVerticalMovementPath(targetPosition);
         }
         if (getPosition().isTargetPositionHorizontal(targetPosition)) {
-            mp.direction = Direction.HORIZONTAL;
-            mp.startPositionOffset = getPosition().getYOffset();
-            mp.targetPositionOffset = targetPosition.getYOffset();
-            mp.movementPathOffset = targetPosition.getXOffset();
+            positions = getPosition().getPositionsForHorizontalMovementPath(targetPosition);
         }
-        if (mp.startPositionOffset > mp.targetPositionOffset)
-            mp.increment = -1;
-        else
-            mp.increment = 1;
 
-        List<Position> positions = new ArrayList<>();
-        getPositionsInMovementPath(mp, positions);
         if (checkMovementPathForOtherPieces(positions)) return true;
         return false;
-    }
-
-    private static void getPositionsInMovementPath(Rook.movementPath mp, List<Position> positions) {
-        for (int p = mp.startPositionOffset + mp.increment; p != mp.targetPositionOffset; p = p + mp.increment) {
-            if(mp.direction==Direction.HORIZONTAL)
-                positions.add(Position.getPositionFor(mp.movementPathOffset, p));
-            else if(mp.direction==Direction.VERTICAL)
-                positions.add(Position.getPositionFor(p, mp.movementPathOffset));
-            else return;
-        }
     }
 
     private boolean checkMovementPathForOtherPieces(List<Position> positions) {
@@ -82,18 +60,4 @@ public class Rook extends ChessPiece {
         }
         return false;
     }
-
-    public enum Direction {
-        HORIZONTAL,
-        VERTICAL
-    }
-
-    class movementPath{
-        Direction direction;
-        int startPositionOffset;
-        int targetPositionOffset;
-        int movementPathOffset;
-        int increment;
-    }
-
 }
