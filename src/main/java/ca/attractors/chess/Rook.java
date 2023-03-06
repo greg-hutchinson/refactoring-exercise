@@ -50,11 +50,12 @@ public class Rook extends ChessPiece {
             return isHorizontalMovementObstructed(getPosition().getYOffset(), targetPosition.getYOffset(), targetPosition);
         }
 
-        if (targetPosition.y != getPosition().y) {
-            return false;
+
+        if (targetPosition.y == getPosition().y) {
+            return isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
         }
 
-        return isVerticalMovementObstructed(getPosition().getXOffset(), targetPosition.getXOffset(), targetPosition);
+        return false;
     }
 
     private List<Position> getVerticalPositionsInPath(int start, int end, int increment, Position targetPosition) {
